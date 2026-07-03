@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>All Fields Required</title>
+<style>
+:root {
+  --black: #141414;
+  --white: #E9E9E9;
+  --accent: #E20613;
+  --body-size: 12pt;
+  --title-size: 24pt;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: var(--body-size);
+  line-height: 1.08;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+.site-title {
+  position: fixed;
+  top: 16px;
+  left: 23px;
+  z-index: 20;
+  font-family: "Helvetica Neue Condensed", sans-serif;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.site-title-logo {
+  display: block;
+  width: min(300px, calc(100vw - 150px));
+  height: auto;
+}
+.site-subtitle {
+  display: none;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+html[lang="it"] .site-subtitle.it,
+html[lang="en"] .site-subtitle.en { display: block; }
+.lang-switch {
+  position: fixed;
+  top: 15px;
+  right: 32px;
+  z-index: 30;
+  font-size: 16px;
+  line-height: 1;
+  color: rgba(233,233,233,.34);
+  display: flex;
+  gap: 4px;
+  text-transform: uppercase;
+}
+.lang-switch button {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.lang-switch button.active { color: var(--white); }
+.side-nav {
+  position: fixed;
+  top: 120px;
+  left: 23px;
+  width: 220px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 16px;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+.side-nav a {
+  display: block;
+  color: var(--white);
+  margin: 0 0 2px;
+}
+.side-nav a.level-1 {
+  text-transform: none;
+  padding-left: 8px;
+}
+.side-nav a:hover,
+.side-nav a.active { color: var(--accent); opacity: 1; }
+main {
+  width: min(760px, calc(100vw - 455px));
+  margin-left: 396px;
+  padding-top: 2px;
+  padding-bottom: 70px;
+}
+section {
+  min-height: auto;
+  margin-bottom: 28px;
+  scroll-margin-top: 124px;
+}
+.section-kicker {
+  font-family: "Helvetica", sans-serif;
+  font-size: 16px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  font-weight: 400;
+  transform: translate(-2px, 0);
+  margin: 0 0 17px;
+}
+h1, h2, h3 {
+  text-wrap: balance;
+  widows: 3;
+  orphans: 3;
+  font-family: "Helvetica", sans-serif;
+  font-size: var(--title-size);
+  line-height: .98;
+  letter-spacing: -0.08em;
+  font-weight: 400;
+  margin: 0 0 14px;
+}
+h2 {
+  font-size: 18px;
+  line-height: 1.05;
+  margin-top: 28px;
+  margin-bottom: 18px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+h3 {
+  font-size: 15px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-weight: 400;
+}
+p {
+  margin: 0 0 24px;
+  text-wrap: pretty;
+  widows: 3;
+  orphans: 3;
+  max-width: 735px;
+  font-weight: 400;
+  font-size: 14px;
+}
+.text-video {
+  width: 100%;
+  max-width: 735px;
+  margin: 0 0 28px;
+}
+.text-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--black);
+}
+.text-image {
+  width: 100%;
+  max-width: 735px;
+  margin: 0 0 28px;
+}
+.text-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.text-video.crop-top {
+  overflow: hidden;
+}
+.text-video.crop-top video {
+  transform: translateY(-10px) scale(1.03);
+  transform-origin: center top;
+}
+.lang-content { display: none; }
+.lang-content.active { display: block; }
+::selection { background: var(--accent); color: var(--white); }
+@media (max-width: 760px) {
+  body { font-size: 14pt; line-height: 1.1; }
+  .site-title { position: relative; top: auto; left: auto; padding: 18px 20px 0; }
+  .site-title-logo { width: min(300px, calc(100vw - 120px)); }
+  .site-subtitle { font-size: 14px; }
+  .side-nav { display: none; }
+  .lang-switch { top: 24px; right: 20px; font-size: 14px; position: absolute; }
+  main { width: auto; margin: 0; padding: 42px 20px 60px; }
+  section { margin-bottom: 28px; scroll-margin-top: 24px; }
+  .section-kicker { margin-bottom: 18px; font-size: 14px; }
+  h1 { font-size: 24pt; }
+  h2, h3 { font-size: 14pt; }
+  p { max-width: none; margin-bottom: 24px; }
+}
+
+.document-image {
+  display: block;
+  width: 100%;
+  max-width: 735px;
+  height: auto;
+  margin: 0 0 24px;
+}
+/* Tasto indietro verso index */
+.back-index {
+  position: fixed;
+  top: 92px;
+  left: 23px;
+  z-index: 35;
+  display: inline-block;
+  appearance: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: var(--white);
+  opacity: .42;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 220ms ease, color 220ms ease;
+}
+
+
+body {
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+body.is-loaded { opacity: 1; }
+body.is-leaving { opacity: 0; }
+
+@media (max-width: 760px) {
+  .back-index {
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: 35;
+    display: inline-block;
+    margin: 18px 20px 0;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { transition: none; }
+  .back-index { transition: none; }
+}
+
+</style>
+</head>
+<body>
+<header class="site-title">
+  <img class="site-title-logo" src="afr-bianco.svg" alt="All Fields Required">
+  <span class="site-subtitle it">Domande oltre la privacy</span>
+  <span class="site-subtitle en">Questions beyond privacy</span>
+</header>
+<div aria-label="Language switch" class="lang-switch"><button data-lang="en">ENG</button><button class="active" data-lang="it">ITA</button></div>
+<a class="back-index" href="../index.html" aria-label="Torna all'index">INDIETRO</a>
+<nav aria-label="Sezioni" class="side-nav">
+  <a class="level-0" data-target="abstract" href="#abstract">ABSTRACT</a>
+  <a class="level-0" data-target="collezionamento" href="#collezionamento">COLLEZIONAMENTO</a>
+  <a class="level-1" data-target="fase1" href="#fase1">Prima Fase</a>
+  <a class="level-1" data-target="fase2" href="#fase2">Seconda Fase</a>
+  <a class="level-1" data-target="fase3" href="#fase3">Terza Fase</a>
+  <a class="level-0" data-target="restituzione" href="#restituzione">RESTITUZIONE</a>
+  <a class="level-0" data-target="credits" href="#credits">CREDITS</a>
+</nav>
+<main>
+  <div class="lang-content it active" data-lang-content="it">
+<section id="abstract" data-section="abstract"><div class="section-kicker"></div>
+<img class="document-image" src="05 (1).JPG" alt="installazione" loading="lazy">
+<p>All Fields Required* è un’installazione interattiva che esplora le dinamiche di accesso al lavoro digitale, focalizzandosi sui processi di on-boarding degli human-in-the-loop e degli human annotators. Figure che, da remoto e per pochi centesimi a micro-task, classificano immagini, trascrivono audio, digitano stringhe di testo e valutano contenuti&nbsp;online.</p>
+<p>Il progetto trae origine da un’esperienza diretta di registrazione all’interno delle piattaforme di crowd work, intrapresa con l’obiettivo di osservare dall’interno i protocolli di selezione e reclutamento. Durante questa fase sono emerse domande invasive, che superano le reali necessità lavorative, spingendosi ben oltre i confini della&nbsp;privacy.</p>
+<p>L’installazione proietta questa dinamica calando lo spettatore nella condizione degli human-in-the-loop.<br>Attraverso due schermi speculari, il pubblico affronta prima le domande reali estratte dalle piattaforme, misurandosi con l’atto del rispondere. Subito dopo scopre il proprio volto inserito in un dataset e associato alla risposta fornita,<br>un cambio di prospettiva che riduce lo spettatore a soggetto puramente passivo, di fronte a una misurazione già compiuta e irreversibile. Questo meccanismo rende evidente quanto, già nella fase preliminare di accesso, venga richiesto e ceduto in termini di dati&nbsp;personali.</p>
+<p>All Fields Required* invita a riflettere sulla violenza sottile e sistemica che si nasconde dietro processi digitali e dietro un lavoro reso invisibile, seppur essenziale per il training dell’intelligenza&nbsp;artificiale.</p>
+<p>Cosa siamo disposti a consegnare pur di accedere a una posizione&nbsp;lavorativa?<br>
+Quanto di noi resta nella fase di&nbsp;onboarding?</p>
+</section>
+<section id="collezionamento" data-section="collezionamento"><div class="section-kicker">COLLEZIONAMENTO</div>
+<h2>Definizione dell’oggetto di analisi e perimetro della&nbsp;ricerca</h2>
+<p>L’oggetto principale di questa ricerca è l’ecosistema del micro-lavoro digitale, nello specifico la figura<br>degli Human-in-the-Loop. Questa categoria di lavoratori, pur essendo fondamentale per l’addestramento<br>e la calibrazione dei sistemi di Intelligenza Artificiale, è storicamente e strutturalmente resa invisibile<br>agli occhi dell’utente&nbsp;finale.</p>
+<p>Il perimetro della ricerca si concentra sulle metriche di violenza intrinseche a questo mercato: violenze di natura contrattuale, come paghe orarie, delocalizzazione e tutele assenti; temporale, come orari di lavoro alienanti;<br> e psicologica, come esposizione a contenuti sensibili e invasione della privacy. L’indagine non si è limitata a una mappatura quantitativa dei dati, ma ha voluto indagare il rapporto di potere e sfruttamento tra le piattaforme <br> di crowdsourcing e i lavoratori, partendo dalla fase di on-boarding che questi ultimi svolgono per&nbsp;iscriversi.</p>
+<p>In linea con l’obiettivo di mantenere una totale trasparenza rispetto alle decisioni prese, si specifica che il processo <br> di collezionamento dei dati non è stato lineare, ma si è sviluppato attraverso tre fasi metodologiche distinte.<br>Ognuna di esse ha ridefinito il nostro posizionamento etico e critico rispetto all’oggetto di&nbsp;studio.</p>
+<h2>Prima fase: la visione&nbsp;esterna</h2>
+<p>Inizialmente, la ricerca si è mossa da una prospettiva puramente osservativa ed esterna. <br>Abbiamo individuato due potenziali macro-percorsi d’indagine: la via empatica, legata al trauma psicologico di ciò <br>che i lavoratori sono costretti a vedere; e la via contrattuale, legata alle condizioni economiche e burocratiche. Per garantire maggiore sistematicità e identificare pattern comuni nel dataset, abbiamo scelto di approfondire la via&nbsp;contrattuale.</p>
+<p>Metodologia e strumenti: è stata effettuata un’attività di web scraping, automatizzato e manuale, sulle principali piattaforme di reclutamento globali: LinkedIn, Naukri-India e&nbsp;Indeed.</p>
+<p>Dati considerati: piattaforme di provenienza dei contratti, aree geografiche di reclutamento, con particolare attenzione all’asse principale tra Stati Uniti e India, tipologie contrattuali, paga oraria e livello di esperienza&nbsp;richiesto.</p>
+<p>Considerazioni emerse: questa metodologia è stata presto interrotta, poiché i dati raccolti sono risultati “freddi”, distaccati e facilmente reperibili online. Questo approccio non permetteva di far emergere la violenza sistemica <br>e sommersa che l’ambizione del progetto&nbsp;richiedeva.</p>
+<figure class="text-video">
+  <video autoplay muted loop controls playsinline preload="metadata" src="on%20boarding.mp4"></video>
+</figure>
+<h2>Seconda fase: il processo&nbsp;estrattivista</h2>
+<p>Per avvicinarci all’oggetto di studio, abbiamo deciso di invertire i ruoli, posizionandoci come “committenti” all’interno delle piattaforme per somministrare task direttamente ai&nbsp;lavoratori.</p>
+<p>Metodologia e strumenti: registrazione e pubblicazione di micro-task su piattaforme leader di crowdsourcing, <br>come Amazon Mechanical Turk (MTurk), Data Annotation e Clickworker. Abbiamo formulato due task mirati sotto forma di domande aperte a cui rispondere tramite&nbsp;audio:</p>
+<p>“Come descriveresti il tuo lavoro a una persona che non ha idea di cosa tu&nbsp;faccia?”<br>
+“A che ora termina la tua giornata lavorativa? Cosa fai nel tempo libero dopo il&nbsp;lavoro?”</p>
+<p>Dati considerati: i dati raccolti sono stati strutturati in un foglio di calcolo (Google Fogli), organizzato secondo le seguenti&nbsp;metriche:</p>
+<p>— Contenuto della risposta e&nbsp;datazione.<br>
+— Compenso erogato, per valutare il rapporto tra la qualità della risposta e la&nbsp;retribuzione.<br>
+— Parole ricorrenti, per rintracciare pattern testuali e&nbsp;semantici.<br>
+— Note e impressioni di ricerca, una colonna dedicata ad annotare le discrepanze tra la narrazione istituzionale <br>delle piattaforme e la realtà del&nbsp;lavoratore.</p>
+<p>Considerazioni emerse: dall’analisi è emerso che molti lavoratori rispondevano alterando la propria voce con tool automatizzati, probabilmente per proteggere i propri dati biometrici, oppure inviavano file audio casuali per adempiere rapidamente alla task e sperare di ottenere il compenso. Le risposte pertinenti, invece, ricalcano copioni aziendali standardizzati, privi di sbilanciamenti personali. Nel fare ciò ci siamo resi conto che stavamo trattando i micro-workers come oggetti da cui estrarre valore e dati per il nostro dataset, replicando le stesse dinamiche di sfruttamento <br> che l’opera intendeva&nbsp;criticare.</p>
+<h2>Terza fase:&nbsp;l’immedesimazione</h2>
+<p>Consapevoli del limite del processo estrattivista, abbiamo compreso che l’unica via rimasta, la più stimolante <br>e concettualmente onesta, era quella dell’immedesimazione. Per capire davvero la violenza delle metriche <br>non potevamo limitarci a osservare: abbiamo quindi deciso di fare un’esperienza&nbsp;diretta.</p>
+<p>Metodologia e strumenti: abbiamo deciso di iscriverci a nostra volta alle piattaforme, non più come committenti <br>ma come lavoratori, partecipando attivamente ai processi di annotazione e training. Questa transizione da osservatori esterni a fruitori del sistema ha cambiato la nostra&nbsp;prospettiva.</p>
+<p>Dati considerati: facendo scraping delle registrazioni e delle domande che le varie piattaforme ponevano nella fase <br>di on-boarding, è emerso che c’erano domande e task da svolgere che avevano scatenato in noi dissenso.<br>Abbiamo quindi deciso di categorizzarle in una colonna definita&nbsp;“Altro”.</p>
+<p>Considerazioni emerse: è esattamente in questa terza fase di immedesimazione che ha preso forma il concetto <br>della nostra restituzione finale. L’installazione non nasce quindi come visualizzazione grafica di un dataset di scraping (Fase I), né come esibizione delle risposte dei lavoratori (Fase II), ma come traduzione spaziale e sensoriale <br>di un’esperienza diretta di&nbsp;on-boarding.</p>
+</section>
+<section id="restituzione" data-section="restituzione"><div class="section-kicker">RESTITUZIONE</div>
+<h2>Concept&nbsp;dell’installazione</h2>
+<p>Il concept creativo si basa sulla ricreazione dell’esperienza di on-boarding, ponendo il visitatore nella condizione degli Human-in-the-Loop. L’estetica minimalista riflette la natura alienante e standardizzata delle piattaforme di crowd work, dove l’attenzione è focalizzata unicamente sulla&nbsp;task.</p>
+<p>Le scelte creative principali&nbsp;includono:</p>
+<p>L’Eredità dei Dati: le descrizioni audio e testuali delle condizioni di lavoro, raccolte nella Fase II, sono state mantenute come suono di disturbo ambientale. Questo soundscape, frammentario e talvolta incomprensibile, <br>avvolge lo spettatore: un richiamo costante al “trauma psicologico” e alla “via empatica” esplorati nella Fase I, <br>oltre che una testimonianza delle voci che si tentava di&nbsp;mappare.</p>
+<p>L’Ecosistema Visivo: gli elementi visivi dell’installazione derivano direttamente dai materiali collezionati. <br>L’interfaccia di interazione (Schermo 1) utilizza il testo originale di domande reali e invasive, come l’esempio<br> “What is your interest in gambling and casinos?”. L’estetica a griglia dei risultati finali (Schermo 2) <br>è un’eco diretta della visualizzazione del dataset di annotazioni: i volti dei visitatori diventano puro dato all’interno <br>di una griglia più&nbsp;vasta.</p>
+<h2>Struttura spaziale&nbsp;dell'installazione</h2>
+<p>L’installazione si articola attraverso un sistema a due schermi: Postazione 1 e Postazione&nbsp;2.</p>
+<figure class="text-image">
+  <img src="story.png" alt="Schema della struttura spaziale dell'installazione">
+</figure>
+<h2>Postazione 1:&nbsp;On-boarding</h2>
+<p>Il primo computer presenta un’interfaccia web custom che riporta in grande, a tutto schermo, le domande invasive raccolte durante la fase di&nbsp;ricerca.</p>
+<p>La tecnologia dietro l’interfaccia: sviluppata in ambiente web (HTML5, CSS3 e JavaScript), l’applicazione blocca l’utente all’interno di una sequenza di all fields required. Non è possibile avanzare senza rispondere,<br> né declinare la&nbsp;risposta.</p>
+<p>Il meccanismo di cattura: il fruitore, dando il consenso per “proseguire”, attiva la webcam integrata del laptop. <br>In questo modo inizia la cattura video, che registra il volto dell’utente, ne associa un ID e memorizza le risposte&nbsp;inserite.</p>
+<figure class="text-video">
+  <video autoplay muted loop controls playsinline preload="metadata" src="registrazione%20domande.mp4"></video>
+</figure>
+<h2>Postazione 2:&nbsp;Dataset</h2>
+<p>Il secondo computer, posizionato in maniera speculare sull’altro braccio, mostra i dati catturati dalla Postazione 1, trasmettendoli in tempo reale a un server locale e processandoli&nbsp;istantaneamente.</p>
+<p>La griglia di visualizzazione: sul secondo schermo, il video in loop del volto del fruitore viene incasellato all’interno di una griglia e associato alle risposte fornite. Il dataset si costruisce quindi mano a mano che gli utenti rispondono alle&nbsp;domande.</p>
+<figure class="text-video crop-top">
+  <video autoplay muted loop controls playsinline preload="metadata" src="registrazione%20schermi.mp4"></video>
+</figure>
+<h2>Scelte e strategie di&nbsp;significato</h2>
+<p>Ogni scelta formale, tecnologica e spaziale è volta a far sperimentare all’utente due prospettive&nbsp;opposte.</p>
+<p>Dal Soggetto all’Oggetto: nell’interazione con il primo laptop, lo spettatore si percepisce come un soggetto attivo che sta compiendo una scelta: quella di rispondere. Osservando il secondo schermo, invece, realizza che il proprio volto<br> e le proprie risposte sono stati categorizzati e immagazzinati. Lo spettatore viene quindi ridotto a un’unità passiva all’interno di un dataset rigido e&nbsp;irreversibile.</p>
+<p>Struttura spaziale: l’installazione si configura come una struttura simmetrica composta da due computer collocati specularmente su bracci laterali, sostenuti da un piedistallo centrale. La posizione rialzata dei dispositivi <br>non è casuale: produce un rapporto di dominanza visiva nei confronti dello spettatore, che viene posto in una condizione di osservazione passiva, come se fosse sorvegliato da un sistema di controllo o da telecamere di&nbsp;videosorveglianza.</p>
+<p>All Fields Required* pone l’attenzione su un sistema che impone all’individuo di tradurre la propria identità <br>in informazione ancora prima di poter accedere al mondo del lavoro. Dati personali, esperienze biografiche <br>e caratteristiche soggettive diventano così requisiti obbligatori di partecipazione, trasformando l’utente in una risorsa leggibile, classificabile e potenzialmente sfruttabile dal&nbsp;sistema.</p>
+<figure class="text-video">
+  <video autoplay muted loop controls playsinline preload="metadata" src="Installazione%20sub%20ITA.mp4"></video>
+</figure>
+</section>
+<section id="credits" data-section="credits"><div class="section-kicker">CREDITS</div>
+<p>Studenti-autori<br>
+Casoni&nbsp;Ottavia<br>
+Natale Giuseppe&nbsp;Mattia<br>
+Scotto Lavina&nbsp;Mariana<br>
+Somma&nbsp;Nicole</p>
+<p>Docenti<br>
+Autori&nbsp;Antonella<br>
+Isidori&nbsp;Enrico</p>
+<p>DASL Communication and Creative Technologies — IED&nbsp;Torino</p>
+</section>
+  </div>
+  <div class="lang-content en" data-lang-content="en">
+<section id="en-abstract" data-section="abstract"><div class="section-kicker"></div>
+<p>All Fields Required* is an interactive installation that explores the dynamics of access to digital work, focusing on the on-boarding processes of human-in-the-loop workers and human annotators. These are figures who, remotely and for a few cents per micro-task, classify images, transcribe audio, type strings of text and evaluate online&nbsp;content.</p>
+<p>The project originates from a direct registration experience within crowd work platforms, undertaken with the aim of observing selection and recruitment protocols from the inside. During this phase, invasive questions emerged: questions that exceeded actual work-related needs and went far beyond the boundaries of&nbsp;privacy.</p>
+<p>The installation projects this dynamic by placing the viewer in the condition of human-in-the-loop workers. Through two mirrored screens, the audience first faces real questions extracted from the platforms, confronting the act of answering. Immediately afterwards, viewers discover their own face inserted into a dataset and associated with the answer provided: a shift in perspective that reduces them to purely passive subjects, facing a measurement that has already been completed and made irreversible. This mechanism makes visible how much is requested and surrendered, in terms of personal data, even during the preliminary phase of&nbsp;access.</p>
+<p>All Fields Required* invites reflection on the subtle and systemic violence hidden behind digital processes and behind a form of labour made invisible, despite being essential to the training of artificial&nbsp;intelligence.</p>
+<p>What are we willing to hand over in order to access a job&nbsp;position?<br>
+How much of us remains in the on-boarding&nbsp;phase?</p>
+</section>
+<section id="en-collezionamento" data-section="collezionamento"><div class="section-kicker">COLLECTION</div>
+<h2>Definition of the object of analysis and research&nbsp;scope</h2>
+<p>The main object of this research is the ecosystem of digital micro-work, specifically the figure of Human-in-the-Loop workers. Although this category of workers is fundamental to the training and calibration of Artificial Intelligence systems, it is historically and structurally made invisible to the final&nbsp;user.</p>
+<p>The scope of the research focuses on the metrics of violence intrinsic to this market: contractual violence, such as hourly pay, delocalization and the absence of protections; temporal violence, such as alienating working hours; and psychological violence, such as exposure to sensitive content and invasion of privacy. The investigation was not limited to a quantitative mapping of data, but aimed to examine the relationship of power and exploitation between crowdsourcing platforms and workers, starting from the on-boarding phase that workers complete in order to&nbsp;register.</p>
+<p>In line with the aim of maintaining full transparency regarding the decisions made, the data collection process was not linear, but developed through three distinct methodological phases. Each of them redefined our ethical and critical positioning in relation to the object of&nbsp;study.</p>
+<h2>First phase: the external&nbsp;view</h2>
+<p>Initially, the research moved from a purely observational and external perspective. We identified two potential macro-paths of investigation: the empathetic path, linked to the psychological trauma of what workers are forced to see; and the contractual path, linked to economic and bureaucratic conditions. To ensure greater systematicity and identify common patterns in the dataset, we chose to explore the contractual path in&nbsp;depth.</p>
+<p>Methodology and tools: automated and manual web scraping was carried out on the main global recruitment platforms: LinkedIn, Naukri-India and&nbsp;Indeed.</p>
+<p>Data considered: platforms from which the contracts originated, geographical recruitment areas, with particular attention to the main axis between the United States and India, contract types, hourly pay and required level of&nbsp;experience.</p>
+<p>Emerging considerations: this methodology was soon interrupted because the data collected turned out to be “cold”, detached and easily available online. This approach did not allow the systemic and submerged violence required by the project’s ambition to&nbsp;emerge.</p>
+<figure class="text-video">
+  <video autoplay muted loop controls playsinline preload="metadata" src="on%20boarding.mp4"></video>
+</figure>
+<h2>Second phase: the extractivist&nbsp;process</h2>
+<p>To get closer to the object of study, we decided to reverse roles, positioning ourselves as “clients” within the platforms in order to submit tasks directly to&nbsp;workers.</p>
+<p>Methodology and tools: registration and publication of micro-tasks on leading crowdsourcing platforms, such as Amazon Mechanical Turk (MTurk), Data Annotation and Clickworker. We formulated two targeted tasks in the form of open questions to be answered through&nbsp;audio:</p>
+<p>“How would you describe your job to someone who has no idea what you&nbsp;do?”<br>
+“What time does your working day end? What do you do in your free time after&nbsp;work?”</p>
+<p>Data considered: the collected data were structured in a spreadsheet (Google Sheets), organized according to the following&nbsp;metrics:</p>
+<p>— Content of the response and&nbsp;date.<br>
+— Compensation paid, to evaluate the relationship between the quality of the response and the&nbsp;remuneration.<br>
+— Recurring words, to trace textual and semantic&nbsp;patterns.<br>
+— Research notes and impressions, a column dedicated to recording discrepancies between the institutional narrative of the platforms and the worker’s&nbsp;reality.</p>
+<p>Emerging considerations: the analysis showed that many workers responded by altering their own voice with automated tools, probably to protect their biometric data, or sent random audio files in order to complete the task quickly and hope to receive compensation. The relevant responses, instead, followed standardized corporate scripts, without personal disclosure. In doing so, we realized that we were treating micro-workers as objects from which to extract value and data for our dataset, replicating the same dynamics of exploitation that the work intended to&nbsp;criticize.</p>
+<h2>Third phase:&nbsp;embodiment</h2>
+<p>Aware of the limitations of the extractivist process, we understood that the only path left, the most stimulating and conceptually honest one, was embodiment. To truly understand the violence of the metrics, we could not limit ourselves to observing: we therefore decided to undergo a direct&nbsp;experience.</p>
+<p>Methodology and tools: we decided to register on the platforms ourselves, no longer as clients but as workers, actively participating in annotation and training processes. This transition from external observers to users of the system changed our&nbsp;perspective.</p>
+<p>Data considered: by scraping the registrations and the questions that the different platforms asked during the on-boarding phase, it emerged that there were questions and tasks to complete that triggered dissent in us. We therefore decided to categorize them in a column defined as&nbsp;“Other”.</p>
+<p>Emerging considerations: it was precisely in this third phase of embodiment that the concept of our final restitution took shape. The installation therefore does not arise as the graphic visualization of a scraping dataset (Phase I), nor as the exhibition of workers’ responses (Phase II), but as the spatial and sensory translation of a direct on-boarding&nbsp;experience.</p>
+</section>
+<section id="en-restituzione" data-section="restituzione"><div class="section-kicker">RESTITUTION</div>
+<h2>Installation&nbsp;concept</h2>
+<p>The creative concept is based on the recreation of the on-boarding experience, placing the visitor in the condition of Human-in-the-Loop workers. The minimalist aesthetic reflects the alienating and standardized nature of crowd work platforms, where attention is focused solely on the&nbsp;task.</p>
+<p>The main creative choices&nbsp;include:</p>
+<p>The Legacy of Data: the audio and textual descriptions of working conditions, collected in Phase II, were maintained as an ambient disturbance sound. This fragmentary and sometimes incomprehensible soundscape envelops the viewer: a constant reminder of the “psychological trauma” and the “empathetic path” explored in Phase I, as well as a testimony to the voices the research attempted to&nbsp;map.</p>
+<p>The Visual Ecosystem: the visual elements of the installation derive directly from the collected materials. The interaction interface (Screen 1) uses the original text of real and invasive questions, such as “What is your interest in gambling and casinos?”. The grid aesthetic of the final results (Screen 2) is a direct echo of the annotation dataset visualization: visitors’ faces become pure data within a larger&nbsp;grid.</p>
+<h2>Spatial structure of the&nbsp;installation</h2>
+<p>The installation is articulated through a two-screen system: Station 1 and Station&nbsp;2.</p>
+<figure class="text-image">
+  <img src="story.png" alt="Spatial structure diagram of the installation">
+</figure>
+<h2>Station 1:&nbsp;On-boarding</h2>
+<p>The first computer presents a custom web interface that displays, large and full-screen, the invasive questions collected during the research&nbsp;phase.</p>
+<p>The technology behind the interface: developed in a web environment (HTML5, CSS3 and JavaScript), the application locks the user inside a sequence of all fields required. It is not possible to move forward without answering, nor to decline the&nbsp;answer.</p>
+<p>The capture mechanism: by giving consent to “continue”, the participant activates the laptop’s integrated webcam. Video capture then begins, recording the user’s face, associating it with an ID and storing the answers&nbsp;entered.</p>
+<figure class="text-video">
+  <video autoplay muted loop controls playsinline preload="metadata" src="registrazione%20domande.mp4"></video>
+</figure>
+<h2>Station 2:&nbsp;Dataset</h2>
+<p>The second computer, positioned in a mirrored way on the other arm, shows the data captured by Station 1, transmitting them in real time to a local server and processing them&nbsp;instantly.</p>
+<p>The visualization grid: on the second screen, the looping video of the participant’s face is placed inside a grid and associated with the answers provided. The dataset is therefore built progressively as users answer the&nbsp;questions.</p>
+<figure class="text-video crop-top">
+  <video autoplay muted loop controls playsinline preload="metadata" src="registrazione%20schermi.mp4"></video>
+</figure>
+<h2>Choices and strategies of&nbsp;meaning</h2>
+<p>Every formal, technological and spatial choice is aimed at making the user experience two opposite&nbsp;perspectives.</p>
+<p>From Subject to Object: while interacting with the first laptop, the viewer perceives themselves as an active subject making a choice: the choice to answer. Looking at the second screen, however, they realize that their face and their answers have been categorized and stored. The viewer is therefore reduced to a passive unit within a rigid and irreversible&nbsp;dataset.</p>
+<p>Spatial structure: the installation is configured as a symmetrical structure composed of two computers placed specularly on lateral arms, supported by a central pedestal. The elevated position of the devices is not accidental: it produces a relationship of visual dominance toward the viewer, who is placed in a condition of passive observation, as if watched over by a control system or by surveillance&nbsp;cameras.</p>
+<p>All Fields Required* draws attention to a system that forces the individual to translate their own identity into information before even being able to access the world of work. Personal data, biographical experiences and subjective characteristics thus become mandatory requirements for participation, transforming the user into a readable, classifiable and potentially exploitable resource for the&nbsp;system.</p>
+<figure class="text-video">
+  <video autoplay muted loop controls playsinline preload="metadata" src="Installazione.mp4"></video>
+</figure>
+</section>
+<section id="en-credits" data-section="credits"><div class="section-kicker">CREDITS</div>
+<p>Student-authors<br>
+Casoni&nbsp;Ottavia<br>
+Natale Giuseppe&nbsp;Mattia<br>
+Scotto Lavina&nbsp;Mariana<br>
+Somma&nbsp;Nicole</p>
+<p>Lecturers<br>
+Autori&nbsp;Antonella<br>
+Isidori&nbsp;Enrico</p>
+<p>DASL Communication and Creative Technologies — IED&nbsp;Torino</p>
+</section>
+  </div>
+</main>
+<script>
+const buttons = document.querySelectorAll('.lang-switch button');
+const contents = document.querySelectorAll('[data-lang-content]');
+const navLinks = document.querySelectorAll('.side-nav a');
+const navLabels = {
+  it: {
+    abstract: 'ABSTRACT', collezionamento: 'COLLEZIONAMENTO', fase1: 'Prima Fase', fase2: 'Seconda Fase', fase3: 'Terza Fase', restituzione: 'RESTITUZIONE', credits: 'CREDITS'
+  },
+  en: {
+    abstract: 'ABSTRACT', collezionamento: 'COLLECTION', fase1: 'First Phase', fase2: 'Second Phase', fase3: 'Third Phase', restituzione: 'RESTITUTION', credits: 'CREDITS'
+  }
+};
+const phaseMap = {
+  it: { fase1: 'Prima fase', fase2: 'Seconda fase', fase3: 'Terza fase' },
+  en: { fase1: 'First phase', fase2: 'Second phase', fase3: 'Third phase' }
+};
+function currentLang() { return document.documentElement.lang || 'it'; }
+function updateNavLabels(lang) {
+  navLinks.forEach(link => {
+    const key = link.dataset.target;
+    if (navLabels[lang] && navLabels[lang][key]) link.textContent = navLabels[lang][key];
+  });
+}
+function setActiveNav(id) {
+  navLinks.forEach(link => link.classList.toggle('active', link.dataset.target === id));
+}
+function findPhaseHeading(lang, id) {
+  const label = phaseMap[lang] && phaseMap[lang][id];
+  if (!label) return null;
+  return [...document.querySelectorAll('.lang-content.active h2')]
+    .find(h => h.textContent.toLowerCase().includes(label.toLowerCase()));
+}
+function elementTop(el) { return el.getBoundingClientRect().top + window.scrollY; }
+function getNavTargets() {
+  const lang = currentLang();
+  const activeContent = document.querySelector('.lang-content.active');
+  if (!activeContent) return [];
+  const targets = [...activeContent.querySelectorAll('section')]
+    .filter(section => section.dataset.section)
+    .map(section => ({ id: section.dataset.section, el: section }));
+  Object.keys(phaseMap[lang] || {}).forEach(id => {
+    const el = findPhaseHeading(lang, id);
+    if (el) targets.push({ id, el });
+  });
+  return targets.sort((a, b) => elementTop(a.el) - elementTop(b.el));
+}
+function updateActiveNav() {
+  const targets = getNavTargets();
+  if (!targets.length) return;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  if (window.scrollY >= maxScroll - 4) {
+    setActiveNav(targets[targets.length - 1].id);
+    return;
+  }
+  const marker = window.scrollY + Math.min(window.innerHeight * 0.28, 180);
+  const active = targets.reduce((current, target) => (
+    elementTop(target.el) <= marker ? target : current
+  ), targets[0]);
+  setActiveNav(active.id);
+}
+function muteVideos(content) {
+  if (!content) return;
+  content.querySelectorAll('video').forEach(video => {
+    video.muted = true;
+  });
+}
+function switchLang(lang) {
+  const activeContent = document.querySelector('.lang-content.active');
+  if (activeContent && activeContent.dataset.langContent !== lang) muteVideos(activeContent);
+  document.documentElement.lang = lang;
+  buttons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  contents.forEach(c => c.classList.toggle('active', c.dataset.langContent === lang));
+  updateNavLabels(lang);
+  updateActiveNav();
+}
+function scrollToSection(id, update=true) {
+  const lang = currentLang();
+  const prefix = lang === 'en' ? 'en-' : '';
+  let el;
+  if (phaseMap[lang] && phaseMap[lang][id]) {
+    el = findPhaseHeading(lang, id);
+  } else {
+    el = document.getElementById(prefix + id) || document.getElementById(id);
+  }
+  if (el) {
+    setActiveNav(id);
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (update) history.replaceState(null, '', '#' + id);
+  }
+}
+buttons.forEach(btn => btn.addEventListener('click', () => switchLang(btn.dataset.lang)));
+navLinks.forEach(link => link.addEventListener('click', (e) => {
+  e.preventDefault();
+  scrollToSection(link.dataset.target);
+}));
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+window.addEventListener('resize', updateActiveNav);
+updateNavLabels('it');
+updateActiveNav();
+
+
+window.addEventListener('pageshow', () => {
+  document.body.classList.remove('is-leaving');
+  requestAnimationFrame(() => document.body.classList.add('is-loaded'));
+});
+
+document.querySelectorAll('a[href]').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target === '_blank') return;
+    event.preventDefault();
+    document.body.classList.add('is-leaving');
+    window.setTimeout(() => {
+      window.location.href = href;
+    }, 420);
+  });
+});
+
+</script>
+</body>
+</html>

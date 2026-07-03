@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>The Alpha Factory</title>
+<style>
+
+:root {
+  --black: #141414;
+  --white: #E9E9E9;
+  --accent: #005DFF;
+  --body-size: 12pt;
+  --title-size: 24pt;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: var(--body-size);
+  line-height: 1.08;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+.site-title {
+  position: fixed;
+  top: 16px;
+  left: 23px;
+  z-index: 20;
+  font-family: "Helvetica Neue Condensed", sans-serif;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.site-title-main {
+  display: block;
+  width: 330px;
+  max-width: calc(100vw - 128px);
+  height: auto;
+}
+.site-subtitle {
+  display: none;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+html[lang="it"] .site-subtitle.it,
+html[lang="en"] .site-subtitle.en {
+  display: block;
+}
+.lang-switch {
+  position: fixed;
+  top: 15px;
+  right: 32px;
+  z-index: 30;
+  font-size: 16px;
+  line-height: 1;
+  color: rgba(233,233,233,.34);
+  display: flex;
+  gap: 4px;
+  text-transform: uppercase;
+}
+.lang-switch button {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.lang-switch button.active { color: var(--white); }
+.side-nav {
+  position: fixed;
+  top: 120px;
+  left: 23px;
+  width: 220px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 16px;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+.side-nav a {
+  display: block;
+  color: var(--white);
+  margin: 0 0 2px;
+}
+.side-nav a.level-1 {
+  text-transform: none;
+  padding-left: 8px;
+}
+.side-nav a:hover,
+.side-nav a.active { color: var(--accent); opacity: 1; }
+main {
+  width: min(760px, calc(100vw - 455px));
+  margin-left: 396px;
+  padding-top: 2px;
+  padding-bottom: 70px;
+}
+section {
+  min-height: auto;
+  margin-bottom: 28px;
+  scroll-margin-top: 124px;
+}
+.section-kicker {
+  font-family: "Helvetica", sans-serif;
+  font-size: 16px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  font-weight: 400;
+  transform: -2px 0;
+  margin: 0 0 17px;
+}
+h1, h2 {
+  font-family: "Helvetica", sans-serif;
+  font-size: var(--title-size);
+  line-height: .98;
+  letter-spacing: -8%;
+  font-weight: 400;
+  margin: 0 0 14px;
+}
+h2 {
+  font-size: 18px;
+  line-height: 1.05;
+  margin-top: 28px;
+  margin-bottom: 18px;
+  font-weight: 400;
+  letter-spacing: -2%;
+
+}
+p {
+  margin: 0 0 24px;
+  max-width: 735px;
+  font-weight: 400;
+  font-size: 14px;
+}
+blockquote.quote-block {
+  margin: 0 0 24px 18px;
+  padding-left: 14px;
+  border-left: 1px solid rgba(233, 233, 233, 0.4);
+  max-width: 735px;
+}
+blockquote.quote-block p {
+  margin: 0 0 10px;
+}
+blockquote.quote-block p:last-child {
+  margin-bottom: 0;
+}
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 735px;
+  margin: 0 0 24px;
+}
+.video-grid.video-grid-four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 780px;
+}
+.video-grid video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+}
+.video-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+}
+.video-grid.video-grid-single {
+  grid-template-columns: 1fr;
+}
+.phone-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 735px;
+  margin: 0 0 24px;
+  align-items: start;
+}
+.phone-item {
+  display: flex;
+  flex-direction: column;
+}
+.phone-item p {
+  margin-bottom: 10px;
+  min-height: 4em;
+}
+.phone-video {
+  max-width: none;
+  margin: 0;
+}
+.phone-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+}
+.document-image {
+  display: block;
+  width: 100%;
+  max-width: 735px;
+  height: auto;
+  margin: 0 0 24px;
+}
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 735px;
+  margin: 0 0 24px;
+}
+.image-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.receipt-grid {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+  max-width: 735px;
+  margin: 0 0 18px;
+}
+.receipt-grid img {
+  display: block;
+  flex: 0 0 auto;
+  width: 200px;
+  height: 700px;
+  margin: 0 0 6px;
+  object-fit: fit;
+  break-inside: avoid;
+}
+.lang-content { display: none; }
+.lang-content.active { display: block; }
+::selection { background: var(--accent); color: var(--white); }
+
+.document-print {
+  display: block;
+  max-width: 300px;
+  height: auto;
+  margin: 0 0 24px;
+}
+
+@media (max-width: 760px) {
+  body {
+    font-size: 14pt;
+    line-height: 1.1;
+  }
+  .site-title {
+    position: relative;
+    top: auto;
+    left: auto;
+    padding: 18px 20px 0;
+  }
+  .site-title-main {
+    width: min(315px, calc(100vw - 110px));
+  }
+  .site-subtitle {
+    font-size: 14px;
+  }
+  .side-nav { display: none; }
+  .lang-switch {
+    top: 24px;
+    right: 20px;
+    font-size: 14px;
+    position: absolute;
+  }
+  main {
+    width: auto;
+    margin: 0;
+    padding: 42px 20px 60px;
+  }
+  section {
+    margin-bottom: 28px;
+    scroll-margin-top: 24px;
+  }
+  .section-kicker {
+    margin-bottom: 18px;
+    font-size: 14px;
+  }
+  h1 { font-size: 24pt; }
+  h2, h3 { font-size: 14pt; }
+  p {
+    max-width: none;
+    margin-bottom: 24px;
+  }
+  .video-grid {
+    grid-template-columns: 1fr;
+    max-width: none;
+  }
+  .video-grid.video-grid-four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    max-width: none;
+  }
+  .phone-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: none;
+  }
+  .phone-item {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .phone-item p {
+    min-height: 0;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 1.05;
+  }
+  .phone-video {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .document-image {
+    max-width: none;
+  }
+  .image-grid {
+    grid-template-columns: 1fr;
+    max-width: none;
+  }
+  .receipt-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: none;
+  }
+  .receipt-grid img {
+    width: min(36vw, 128px);
+    height: auto;
+    max-height: 380px;
+    margin-bottom: 0;
+  }
+
+  .document-print {
+    width: min(200px, 100%);
+    max-width: 200px;
+    height: auto;
+    margin: 0 auto 24px;
+  }
+
+}
+
+
+/* Tasto indietro verso index */
+.back-index {
+  position: fixed;
+  top: 92px;
+  left: 23px;
+  z-index: 35;
+  display: inline-block;
+  appearance: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: var(--white);
+  opacity: .42;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 220ms ease, color 220ms ease;
+}
+
+body {
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+body.is-loaded { opacity: 1; }
+body.is-leaving { opacity: 0; }
+
+@media (max-width: 760px) {
+  .back-index {
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: 35;
+    display: inline-block;
+    margin: 18px 20px 0;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { transition: none; }
+  .back-index { transition: none; }
+}
+
+</style>
+</head>
+<body>
+<header class="site-title">
+  <img class="site-title-main" src="titolo2-transparent.png" alt="#The Alpha Factory">
+  <span class="site-subtitle it">Produrre uomini, misurare donne</span>
+  <span class="site-subtitle en">Producing Men, Measuring Women</span>
+</header>
+<div aria-label="Language switch" class="lang-switch"><button class="" data-lang="en">ENG</button><button class="active" data-lang="it">ITA</button></div>
+<a class="back-index" href="../index.html" aria-label="Torna all'index">INDIETRO</a>
+<nav aria-label="Sezioni" class="side-nav">
+<a class="level-0" data-en="ABSTRACT" data-it="ABSTRACT" data-target="abstract" href="#abstract">ABSTRACT</a>
+<a class="level-0" data-en="COLLECTION" data-it="COLLEZIONAMENTO" data-target="collezionamento" href="#collezionamento">COLLEZIONAMENTO</a>
+<a class="level-1" data-en="Profile research and selection" data-it="Ricerca e selezione dei profili" data-target="fase1" href="#fase1">Ricerca e selezione dei profili</a>
+<a class="level-1" data-en="Post collection and counting" data-it="Raccolta dei post e counting" data-target="fase2" href="#fase2">Raccolta dei post e counting</a>
+<a class="level-1" data-en="Websites, courses and monetization" data-it="Siti, corsi e monetizzazione" data-target="fase3" href="#fase3">Siti, corsi e monetizzazione</a>
+<a class="level-1" data-en="Reel analysis and mashup" data-it="Analisi dei reel e mashup" data-target="fase4" href="#fase4">Analisi dei reel e mashup</a>
+<a class="level-1" data-en="Construction of themes" data-it="Costruzione delle tematiche" data-target="fase5" href="#fase5">Costruzione delle tematiche</a>
+<a class="level-0" data-en="RESTITUTION" data-it="RESTITUZIONE" data-target="restituzione" href="#restituzione">RESTITUZIONE</a>
+<a class="level-0" data-en="CREDITS" data-it="CREDITS" data-target="credits" href="#credits">CREDITS</a>
+</nav>
+<main>
+  <div class="lang-content it active" data-lang-content="it">
+<section id="abstract" data-section="abstract"><div class="section-kicker"></div>
+<img class="document-image" src="inst1.jpg" alt="Inst1" loading="lazy">
+<p>Negli ultimi anni i social media sono diventati uno dei principali luoghi in cui vengono costruiti e diffusi modelli di mascolinità. All'interno della manosfera, termine generico per una rete di comunità online, antifemministe e maschiliste supremate. I Pick-Up Artists (PUA), noti anche come "comunità di seduzione", sono una sottocultura centrale all'interno di questo ecosistema, che si concentrano sulle tecniche di apprendimento per sedurre e controllare le donne e creator promettono di insegnare agli uomini come ottenere successo, rispetto, attrazione e sicurezza personale attraverso strategie, tecniche e percorsi di miglioramento.</p>
+<p>La ricerca alla base del progetto ha analizzato 30 profili appartenenti a questo ecosistema, esaminando siti web, corsi, consulenze e contenuti social. Per ciascun profilo sono stati raccolti e studiati reel, trascrizioni, call to action, pattern linguistici, prodotti commercializzati e strategie di monetizzazione, con l'obiettivo di individuare le narrazioni ricorrenti che attraversano questi contenuti.</p>
+<p>L'analisi ha evidenziato la presenza di un linguaggio estremamente ripetitivo, costruito attorno a concetti come valore, status, controllo, attrazione e performance. In questo sistema la mascolinità viene presentata come un processo di ottimizzazione continua, mentre le donne vengono frequentemente rappresentate come indicatori di successo, obiettivi da raggiungere o conferme del proprio valore.</p>
+<p>L'installazione restituisce questi risultati attraverso sei telefoni che incarnano le principali narrazioni emerse dall'indagine: manipolazione, successo, rispetto, approccio, attrazione e resilienza. Riunendo nello stesso spazio voci, slogan e frammenti di reel, The Alpha Factory trasforma il feed in un ambiente fisico, rendendo visibile il processo attraverso cui desideri, relazioni e identità vengono standardizzati, riprodotti e infine trasformati in mercato.</p></section>
+<section id="collezionamento" data-section="collezionamento"><div class="section-kicker">COLLEZIONAMENTO</div>
+<h2>Definizione dell’oggetto di analisi e perimetro della ricerca</h2>
+<p>L’oggetto di analisi del progetto è l’ecosistema social dei Pick-Up Artists, identificati anche come dating coach o creator legati alla “comunità di seduzione”. La ricerca si concentra su quei profili che producono contenuti rivolti principalmente a un pubblico maschile, promettendo tecniche di attrazione, strategie relazionali, percorsi di miglioramento personale, consulenze e corsi per ottenere successo con le donne.</p>
+<p>Il progetto parte da una domanda critica: i Pick-Up Artists possono essere considerati un nodo intermedio di un problema sistemico più ampio che riguarda l’oggettificazione della donna, trasmesso e amplificato attraverso le piattaforme digitali social? Nelle slide di progetto, questo tema viene collegato alla standardizzazione dei corpi e dei comportamenti, alla riduzione dell’identità a variabili ottimizzabili e alla costruzione relazionale come competizione e performance.</p>
+<p>L’indagine non assume a priori l’esistenza di oggettificazione, ma prova a verificare empiricamente attraverso l’analisi del linguaggio, delle immagini, dei prodotti venduti, delle call to action e delle narrazioni ricorrenti. In questo senso, il progetto non si limita a osservare singoli contenuti problematici, ma prova a ricostruire il sistema che li produce, li ripete e li monetizza.</p>
+<p>Il perimetro dell’indagine è stato definito così:</p>
+<p>Piattaforma principale osservata: Instagram<br>Area geografica: Italia<br>Periodo di osservazione: contenuti pubblicati o attivi negli ultimi 12 mesi, 2025–2026<br>Unità di analisi: account Instagram con almeno 500 follower, riconducibili a coach, creator, dating coach o Pick-Up Artists<br>Oggetti analizzati: post pubblici, reel, caption, bio, hashtag, link esterni, siti web, corsi, consulenze, prodotti digitali, call to action, immagini promozionali.</p>
+<p>Sono stati esclusi profili privati, contenuti non accessibili pubblicamente, messaggi diretti, conversazioni private, commenti di utenti non rilevanti per la ricerca e contenuti non riconducibili all’ecosistema dating coach / seduzione.</p>
+<h2>Prima fase: mappatura manuale degli account Instagram</h2>
+<p>La prima fase del lavoro è consistita nella ricerca e selezione manuale dei profili Instagram. Gli account sono stati individuati attraverso parole chiave ricorrenti nell’ecosistema analizzato, tra cui:</p>
+<p>attrazione, maschio alpha, seduzione, mascolinità, rimorchiare.</p>
+<div class="video-grid video-grid-four">
+  <img aria-label="Mappatura Instagram 1" src="Instagram%201.gif" alt="Mappatura Instagram 1">
+  <img aria-label="Mappatura Instagram 2" src="Instagram%202.gif" alt="Mappatura Instagram 2">
+  <img aria-label="Mappatura Instagram 3" src="Instagram%203.gif" alt="Mappatura Instagram 3">
+  <img aria-label="Mappatura Instagram 4" src="Instagram%204.gif" alt="Mappatura Instagram 4">
+</div>
+<p>Attraverso queste keyword sono stati raccolti 30 account Instagram, poi organizzati in un foglio di calcolo. Per ogni profilo sono stati registrati: nome profilo, numero di follower, following, numero di post, presenza di sito web o link esterno, hashtag ricorrenti, corsi, keyword e bio.</p>
+<p>Questa fase ha permesso di osservare una prima struttura ricorrente. Le bio non si presentano come semplici descrizioni personali, ma come piccoli dispositivi di conversione. Sono costruite per rivolgersi a un target preciso, prevalentemente uomini, e promettono una trasformazione: diventare più sicuri, più desiderabili, più mascolini, più rispettati o più efficaci nella seduzione.</p>
+<p>In sintesi, le bio funzionano come micro-landing page. Catturano l’attenzione, creano un bisogno e spingono immediatamente verso un’azione: cliccare un link, prenotare una call, accedere a un corso o entrare in una community.</p>
+<h2>Raccolta dei post Instagram con Apify</h2>
+<p>Dopo la mappatura dei profili, per ciascuno dei 30 account sono stati analizzati 10 post Instagram attraverso la piattaforma Apify, ottenendo un totale di 300 post raccolti. Per ogni post sono stati estratti dati come caption, hashtag, like, commenti, engagement, tipo di contenuto e parole più utilizzate.</p>
+<div class="video-grid video-grid-single">
+  <video aria-label="Post scraping con ID associato" controls muted autoplay playsinline preload="metadata" src="post%20scraping%20id%20associato.mov"></video>
+</div>
+<p>Questa fase aveva l’obiettivo di sistematizzare il linguaggio ricorrente nei contenuti statici e nei post pubblici. Inizialmente, abbiamo cercato di categorizzare il linguaggio assegnando i contenuti a categorie interpretative come performance, valore, dominio, competizione, controllo, attrazione e successo.</p>
+<p>Tuttavia, questa prima metodologia ha mostrato un limite importante. Una grande quantità di contenuti finiva nella categoria “Altro”. All’inizio questa categoria sembrava semplicemente raccogliere ciò che non rientrava nelle etichette principali, ma la sua rilevanza crescente ci ha fatto capire che il problema non era il dataset: era il metodo.</p>
+<p>La categoria “Altro” ha rivelato che il linguaggio dei Pick-Up Artists non poteva essere compresso dentro categorie stabilite a priori. Molte frasi erano ambigue, ibride, contraddittorie o problematiche non per una singola parola, ma per il tono, il contesto e il modo in cui costruivano una certa idea di mascolinità e relazione. Continuare a categorizzare in modo rigido avrebbe significato escludere proprio quelle sfumature che rendevano il materiale più interessante e critico.</p>
+<p>Per questo motivo abbiamo scelto di abbandonare una classificazione troppo chiusa e di passare a una metodologia meno escludente: il counting delle parole. Invece di decidere in anticipo quali categorie cercare, abbiamo osservato quali parole emergevano con maggiore frequenza dai contenuti raccolti.</p>
+<p>Il counting ha permesso di individuare parole e concetti ricorrenti come valore, rispetto, controllo, attrazione, successo, status, disciplina, performance, competizione. Questi termini hanno confermato la presenza di un linguaggio ripetitivo e orientato alla costruzione della relazione come strategia e prestazione.</p>
+<img class="document-image" src="PIVOT%20SU%20Riga%20tipo_contenuto.png" alt="Tabella pivot sui tipi di contenuto dei post Instagram">
+
+<h2>Terza fase: analisi dei siti web, corsi e consulenze</h2>
+<p>Parallelamente all’analisi dei contenuti Instagram, sono stati osservati i link esterni presenti nei profili. Ogni profilo rimanda, dove disponibile, a siti web, landing page, corsi, consulenze, community, chiamate conoscitive o prodotti digitali.</p>
+<p>I siti sono stati analizzati manualmente e organizzati in tabelle. Per ciascun sito sono stati raccolti:</p>
+<p>URL, descrizione del sito, call to action, titolo del corso, sottotitolo, descrizione, copertina, tipologia di prodotto, trasparenza del prezzo, prezzo, presenza di chiamata conoscitiva e immagini promozionali.</p>
+<p>Questa fase ha permesso di comprendere quanto l’ecosistema dei Pick-Up Artists sia strutturato come un mercato. I contenuti social non sono isolati, ma funzionano come porta d’ingresso verso un sistema commerciale. Il reel o il post cattura attenzione, la bio promette trasformazione, il link porta a una landing page e la landing page conduce a un prodotto: corso, consulenza, manuale, videocorso, community o chiamata conoscitiva.</p>
+<p>L’analisi dei siti ha reso evidente che questi creator non monetizzano soltanto la misoginia interiorizzata di alcuni uomini, ma anche la loro insicurezza, la loro solitudine, la paura del rifiuto e la scarsa autostima. Il problema relazionale viene trasformato in bisogno individuale, e il bisogno individuale viene convertito in prodotto vendibile.</p>
+<h2>Confronto visivo: come viene rappresentata la donna e come viene rappresentato l’uomo</h2>
+<p>Durante l’analisi dei siti web, delle copertine, delle landing page e dei reel, non sono stati raccolti soltanto testi, prezzi e call to action, ma anche immagini. Questa raccolta ha permesso di osservare un secondo livello del fenomeno: non solo cosa viene detto, ma come vengono rappresentati visivamente la donna e l’uomo.</p>
+<p>Il confronto tra le immagini raccolte mostra una forte asimmetria.</p>
+<p>La donna viene spesso rappresentata in modo stereotipato, sessualizzato o ridotto a figura desiderabile. Appare come premio, tentazione, problema, corpo da conquistare, presenza decorativa o conferma del successo maschile. Raramente viene rappresentata come soggetto autonomo: più spesso è il bersaglio di una strategia, l’oggetto di una trasformazione o la prova esterna del valore dell’uomo.</p>
+<p>L’uomo, invece, viene rappresentato attraverso codici visivi aspirazionali ed eroicizzati. Nei siti e nei contenuti promozionali ricorrono immagini dell’uomo come figura forte, disciplinata, dominante, solitaria, superiore, performante. In alcuni casi la rappresentazione assume quasi il tono del supereroe: l’uomo è colui che deve rialzarsi, evolversi, controllarsi, vincere, diventare raro, trasformarsi in una versione potenziata di sé.</p>
+<div class="video-grid">
+  <img aria-label="Rappresentazione visiva della donna" src="donna.gif" alt="Rappresentazione visiva della donna">
+  <img aria-label="Rappresentazione visiva dell’uomo" src="uomo.gif" alt="Rappresentazione visiva dell’uomo">
+</div>
+<p>Questo confronto rende evidente uno dei nuclei centrali del progetto:</p>
+<p>la donna viene rappresentata come misura; l’uomo viene rappresentato come progetto.</p>
+<p>La donna misura il successo dell’uomo, conferma o nega il suo valore, diventa test, premio o ostacolo. L’uomo, invece, viene costruito come soggetto da ottimizzare, migliorare, allenare e rendere competitivo. L’immaginario visivo conferma quindi ciò che emerge dal linguaggio: la relazione viene trasformata in performance, mentre il corpo e il desiderio femminile diventano indicatori del valore maschile.</p>
+<div class="video-grid">
+  <img aria-label="Like, commenti e URL arricchiti" src="like_comments_url_enriched.gif" alt="Like, commenti e URL arricchiti">
+  <img aria-label="Engagement, like e commenti in rapporto ai follower" src="ENGAGEMENT(like + commenti)_follower.gif" alt="Engagement, like e commenti in rapporto ai follower" ></img>
+</div>
+
+<h2>Quarta fase: analisi dei reel, trascrizione e limite del counting</h2>
+<p>La fase successiva si è concentrata sui reel. Dai 30 profili analizzati sono stati selezionati, dove presenti, fino a 10 reel per profilo, scegliendo tra i più recenti e i più visualizzati. Per ogni reel sono stati raccolti URL, views, like, commenti, caption e hashtag. Inoltre, sono stati trascritti gli audio, estratti frame rilevanti e inizialmente è stato effettuato un counting delle parole più ripetute.</p>
+<div class="video-grid video-grid-single">
+  <img aria-label="Scraping dei reel" src="scraping%20reel.gif" alt="Scraping dei reel">
+</div>
+<p>Tuttavia, proprio nella fase dei reel, ci siamo accorte che anche il counting risultava parziale ed escludente. Se nei post il conteggio delle parole permetteva di osservare ricorrenze linguistiche generali, nei reel la gravità dei contenuti non emergeva soltanto dalla frequenza delle parole, ma dalla costruzione complessiva delle frasi.</p>
+<p>Alcune affermazioni erano problematiche non perché contenevano una keyword ricorrente, ma perché costruivano un immaginario preciso: la donna come essere emotivo, manipolatorio, prevedibile, iperselettivo o naturalmente predisposto a determinati comportamenti; l’uomo come soggetto razionale, strategico, dominante, chiamato ad agire, controllare e performare.</p>
+<p>Frasi come:</p>
+<blockquote class="quote-block">
+  <p>“Le donne attraenti, le cosiddette belle fighe, non sono delle stronze, hanno semplicemente delle aspettative molto alte.”</p>
+  <p>“L’uomo è cacciatore-raccoglitore. Localizzi, incroci, attacchi, risolvi. Le donne devono crescere la prole, quindi sono molto più emotive.”</p>
+  <p>“Ci sono livelli di manipolazione profonda in cui una donna non ti manipola apposta, ma è manipolata dalla sua stessa natura a manipolare.”</p>
+</blockquote>
+<p>mostrano che il problema non è riducibile alla parola singola. Il counting non riusciva a restituire la violenza del tono, la naturalizzazione degli stereotipi o il modo in cui queste frasi agiscono sul pubblico.</p>
+<p>Per questo motivo, nella fase finale dell’analisi, abbiamo scelto di adottare la tecnica del mashup. Il mashup consente di non isolare le parole, ma di accostare frasi, slogan, frammenti audio e porzioni di reel provenienti da profili diversi. In questo modo, la ripetizione diventa percepibile non come dato numerico, ma come esperienza.</p>
+<p>Il mashup permette di far emergere la natura sistemica del linguaggio analizzato. Non si tratta più del singolo creator o della singola frase, ma di un coro di voci che, pur provenendo da profili differenti, ripete gli stessi concetti: valore, controllo, rispetto, attrazione, successo, disciplina, dominio, riconquista.</p>
+<p>Questa scelta metodologica è diventata anche una scelta di restituzione. L’installazione finale non mostra solo i dati raccolti: mette in scena la loro ripetizione, la loro aggressività, la loro capacità di costruire un ambiente mentale e culturale.</p>
+
+<h2>Quinta fase: costruzione delle macrotematiche</h2>
+<p>Dopo l’analisi dei reel e la scelta del mashup, i frammenti selezionati sono stati organizzati in sei macrotematiche. Queste categorie non sono state imposte nella prima fase della ricerca, ma sono emerse progressivamente dall’ascolto, dalla trascrizione e dall’accostamento dei materiali.</p>
+<p>Le sei macrotematiche finali sono:</p>
+<p>Manipolazione / Riconquista<br>Successo / Performance<br>Rispetto / Maschio Alfa<br>Approccio / Coraggio<br>Attrazione<br>Crollo / Supporto</p>
+<p>Ogni macrotematica rappresenta una diversa promessa del sistema.</p>
+<p>Manipolazione / Riconquista raccoglie contenuti legati al controllo emotivo, al silenzio strategico, alla distanza e alla riconquista.</p>
+<p>Successo / Performance raccoglie contenuti in cui il valore maschile viene legato alla disciplina, allo status, al capitale mentale, alla produttività e alla trasformazione personale.</p>
+<p>Rispetto / Maschio Alfa raccoglie frasi in cui la relazione viene descritta come gerarchia, test o imposizione di valore.</p>
+<p>Approccio / Coraggio raccoglie contenuti in cui il rifiuto viene trasformato in allenamento e l’uomo viene spinto ad agire, rischiare, approcciare.</p>
+<p>Attrazione raccoglie frasi che rappresentano il desiderio come competizione, gerarchia e selezione.</p>
+<p>Crollo / Supporto raccoglie contenuti che trasformano dolore, solitudine, fallimento e fragilità in retorica della forza e del miglioramento.</p>
+<div class="video-grid video-grid-single">
+  <video aria-label="Macrotematiche finali" controls muted autoplay playsinline preload="metadata" src="temi.mov"></video>
+</div>
+<p>Queste macrotematiche diventano la struttura dell’installazione finale: ogni telefono rappresenta una voce, una categoria, una narrazione.</p></section>
+<section id="restituzione" data-section="restituzione"><div class="section-kicker">RESTITUZIONE</div>
+<h2>Concept dell’installazione</h2>
+<p>La restituzione finale di The Alpha Factory non è una semplice visualizzazione grafica del dataset, ma una traduzione spaziale, sonora e materiale del processo di ricerca.</p>
+<p>L’installazione mette in scena la manosfera come ecosistema chiuso, ripetitivo e autoreferenziale. I Pick-Up Artists analizzati non sono presentati come figure isolate, ma come soggetti che agiscono all’interno di una rete più ampia, in cui contenuti diversi finiscono per riprodurre gli stessi stereotipi, le stesse tecniche di controllo e gli stessi modelli di desiderabilità.</p>
+<p>Nelle slide del progetto, la manosfera viene descritta come un insieme di comunità e movimenti accomunati dalla convinzione che la società sia discriminatoria nei confronti degli uomini. Questo contesto produce un atteggiamento profondamente misogino, amplificato da dinamiche quasi settarie e autoreferenziali, in cui la relazione viene trasformata in performance e la donna in oggetto di valutazione.</p>
+<p>Per questo motivo, la disposizione finale dei telefoni è circolare. Il cerchio richiama una riunione chiusa, un rituale, una setta, un gruppo che si rafforza attraverso la ripetizione delle stesse formule. I telefoni non sono semplicemente supporti video: sono voci che circondano il pubblico. Entrare nell’installazione significa entrare fisicamente dentro un sistema discorsivo.</p>
+<h2>Struttura spaziale dell’installazione</h2>
+<img class="document-image" src="PIANTINA.png" alt="Piantina della struttura spaziale dell’installazione">
+<img class="document-image" src="inst2.jpg" alt="Inst1" loading="lazy">
+<p>L’installazione è composta da sei telefoni disposti in cerchio. Ogni telefono riproduce un video verticale in loop, costruito attraverso la tecnica del mashup. I video combinano frasi, slogan, frammenti audio, sottotitoli, parole ricorrenti e materiali visivi ispirati ai reel analizzati.</p>
+<div class="phone-grid">
+  <div class="phone-item">
+    <p>Telefono 1 — Manipolazione / Riconquista<br>Frasi legate al controllo emotivo, alla distanza, al silenzio strategico e alla riconquista.</p>
+    <div class="phone-video"><video aria-label="Telefono 1 - Manipolazione / Riconquista" controls muted autoplay loop playsinline preload="metadata" src="manipolazione.hevc.mp4"></video></div>
+  </div>
+  <div class="phone-item">
+    <p>Telefono 2 — Successo / Performance<br>Frasi legate alla disciplina, allo status, al valore personale e alla costruzione dell’uomo vincente.</p>
+    <div class="phone-video"><video aria-label="Telefono 2 - Successo / Performance" controls muted autoplay loop playsinline preload="metadata" src="successo.hevc.mp4"></video></div>
+  </div>
+  <div class="phone-item">
+    <p>Telefono 3 — Rispetto / Maschio Alfa<br>Frasi legate al dominio, al rispetto imposto, al controllo e alla gerarchia uomo-donna. <br></br></p>
+    <div class="phone-video"><video aria-label="Telefono 3 - Rispetto / Maschio Alfa" controls muted autoplay loop playsinline preload="metadata" src="alpha.hevc.mp4"></video></div>
+  </div>
+  <div class="phone-item">
+    <p>Telefono 4 — Approccio / Coraggio<br>Frasi legate all’azione, al rischio, al rifiuto e alla necessità di performare sicurezza.</p>
+    <div class="phone-video"><video aria-label="Telefono 4 - Approccio / Coraggio" controls muted autoplay loop playsinline preload="metadata" src="Approccio.hevc.mp4"></video></div>
+  </div>
+  <div class="phone-item">
+    <p>Telefono 5 — Attrazione<br>Frasi legate alla selezione, alla competizione, alla desiderabilità e alla gerarchia del valore.</p>
+    <div class="phone-video"><video aria-label="Telefono 5 - Attrazione" controls muted autoplay loop playsinline preload="metadata" src="Attrazione.hevc.mp4"></video></div>
+  </div>
+  <div class="phone-item">
+    <p>Telefono 6 — Crollo / Supporto<br>Frasi legate alla sofferenza, alla solitudine, alla fragilità e alla trasformazione del dolore in forza.</p>
+    <div class="phone-video"><video aria-label="Telefono 6 - Crollo / Supporto" controls muted autoplay loop playsinline preload="metadata" src="crollo.hevc.mp4"></video></div>
+  </div>
+</div>
+<p>I sei telefoni funzionano come sei canali di una stessa macchina. Ogni dispositivo sembra parlare di un tema diverso, ma tutti insieme costruiscono lo stesso messaggio: l’uomo deve migliorarsi, controllarsi e dominare; la donna deve essere letta, conquistata, misurata o superata.</p>
+<h2>Il centro dell’installazione: libri, scontrini, prezzi e QR code</h2>
+<p>Al centro del cerchio si trova il nucleo materiale dell’esposizione. Qui vengono collocati i libri trovati durante l’analisi dei siti, insieme a scontrini, prezzi, descrizioni, call to action e QR code.</p>
+<p>Questa parte centrale rende evidente l’aspetto commerciale dell’ecosistema. Quello che nei reel appare come consiglio, supporto o motivazione personale si rivela parte di un mercato strutturato. Il disagio relazionale viene trasformato in prodotto. La paura del rifiuto diventa corso. La sofferenza diventa consulenza. La relazione diventa funnel.</p>
+<p>I libri raccolti dai siti diventano oggetti fisici all’interno dell’installazione. I loro titoli rendono visibile la radicalità del linguaggio usato da questi ecosistemi. Alcuni esempi:</p>
+<p>“Come farla pentire di averti cambiato”<br>“Liberati da lei: come spezzare la dipendenza emotiva e riconquistare te stesso”<br>“Le 16 leggi per entrare nella testa di una donna”</p>
+<div class="video-grid video-grid-single">
+  <img aria-label="Libri raccolti dai siti analizzati" src="libri.gif" alt="Libri raccolti dai siti analizzati">
+</div>
+<p>Accanto ai libri vengono posizionati degli scontrini. Gli scontrini funzionano come ricevute simboliche del mercato della seduzione. Riportano prezzi, descrizioni, promesse commerciali e call to action dei corsi e delle consulenze vendute. Ogni scontrino può includere un QR code che rimanda al sito o alla fonte analizzata.</p>
+<img class="document-print" src="stampante.gif" alt="Animazione stampante scontrini" loading="lazy">
+<div class="receipt-grid">
+  <img src="assets/scontrini/scan-scontrini-1.png" alt="Scontrino scansionato 1" loading="lazy">
+  <img src="assets/scontrini/scan-scontrini-3.png" alt="Scontrino scansionato 3" loading="lazy">
+  <img src="assets/scontrini/scan-scontrini-4.png" alt="Scontrino scansionato 4" loading="lazy">
+</div>
+<p>Il centro dell’esposizione è illuminato. La luce invita il pubblico a entrare nel cerchio e ad avvicinarsi agli oggetti. Questa scelta crea un’ambiguità: la luce attira, ma una volta entrato, l’utente si trova circondato dai telefoni e dalle voci del mashup. Lo spazio riproduce così il funzionamento del funnel osservato online: il contenuto cattura, la promessa seduce, il prodotto monetizza.</p>
+<div class="image-grid">
+  <img src="centro1.JPG" alt="Centro esposizione 1" loading="lazy">
+  <img src="centro2.JPG" alt="Centro esposizione 2" loading="lazy">
+</div>
+<h2>Scelte creative e significato</h2>
+<p>La scelta dello smartphone come dispositivo principale deriva dal contesto originario della ricerca. I contenuti analizzati nascono e circolano principalmente su schermi verticali, dentro feed rapidi, ripetitivi e personalizzati. Usare telefoni reali significa mantenere il formato quotidiano del fenomeno, ma spostarlo in uno spazio fisico, dove la ripetizione diventa più evidente e più disturbante.</p>
+<p>La disposizione circolare trasforma i telefoni in un coro. Ogni voce ripete una parte dell’ideologia, ma l’effetto complessivo è quello di un sistema chiuso, quasi settario. Il pubblico non guarda un singolo contenuto, ma viene immerso in una rete di messaggi che si confermano a vicenda.</p>
+<p>Il mashup è una scelta fondamentale perché restituisce ciò che il counting non riusciva a mostrare: il tono, l’insistenza, la violenza implicita, la continuità tra profili diversi. Non si tratta più di leggere una parola frequente, ma di ascoltare una macchina linguistica che produce continuamente la stessa idea di uomo e di donna.</p>
+<p>Il centro con libri e scontrini aggiunge un ulteriore livello: mostra che questa macchina discorsiva è anche una macchina economica. La misoginia, la paura, l’insicurezza e il desiderio di controllo diventano prodotti vendibili.</p>
+<h2>Montaggio dell’installazione</h2>
+<div class="image-grid">
+  <img src="montaggio1.JPG" alt="Montaggio 1" loading="lazy">
+  <img src="montaggio2.JPG" alt="Montaggio 2" loading="lazy">
+  <img src="montaggio3.JPG" alt="Montaggio 3" loading="lazy">
+  <img src="montaggio4.JPG" alt="Montaggio 4" loading="lazy">
+</div>
+<p>L’installazione lavora quindi su tre livelli:</p>
+<p>Linguaggio — i telefoni restituiscono frasi, slogan e mashup di reel.<br>Immaginario — le immagini raccolte mostrano la donna come stereotipo e l’uomo come figura eroicizzata.<br>Mercato — libri, scontrini, prezzi, call to action e QR code mostrano la monetizzazione della seduzione.</p>
+<p>The Alpha Factory non visualizza solo un dataset: mette in scena una macchina discorsiva e commerciale in cui l’uomo viene prodotto come progetto di ottimizzazione, la donna viene misurata come conferma del suo valore, e la relazione diventa un mercato.</p></section>
+<div class="video-grid video-grid-single">
+  <video aria-label="finale" controls muted autoplay playsinline preload="metadata" src="dv-video_2_.webm"></video>
+</div>
+<section id="credits" data-section="credits"><div class="section-kicker">CREDITS</div>
+<p>Studenti-autori<br>Martina Procopio<br>Giorgia Ciocca<br>Anisia Petruccelli</p>
+<p>Docenti<br>Antonella Autori<br>Enrico Isidori</p>
+<p>Corso<br>Data Visualization<br>DASL Communication and Creative Technologies<br>IED Torino</p>
+<p>A.A. 2025/2026</p></section>
+  </div>
+  <div class="lang-content en" data-lang-content="en">
+<section id="en-abstract" data-section="abstract"><div class="section-kicker"></div>
+<img class="document-image" src="inst1.jpg" alt="Inst1" loading="lazy">
+<p>In recent years, social media have become one of the main spaces where models of masculinity are constructed and circulated. Within the manosphere, a broad network of online anti-feminist and male-supremacist communities, Pick-Up Artists, also known as the “seduction community”, represent a central subculture. They focus on teaching techniques to seduce and control women, while creators promise to teach men how to achieve success, respect, attraction and personal confidence through strategies, techniques and self-improvement paths.</p>
+<p>The research behind the project analyzed 30 profiles belonging to this ecosystem, examining their websites, courses, consulting services and social media content. For each profile, reels, transcripts, calls to action, linguistic patterns, commercialized products and monetization strategies were collected and studied in order to identify the recurring narratives running through these contents.</p>
+<p>The analysis revealed an extremely repetitive language built around concepts such as value, status, control, attraction and performance. In this system, masculinity is presented as a process of continuous optimization, while women are frequently represented as indicators of success, goals to be achieved or confirmations of male value.</p>
+<p>The installation translates these findings through six smartphones, each embodying one of the main narratives that emerged from the research: manipulation, success, respect, approach, attraction and resilience. By bringing together voices, slogans and fragments of reels in the same space, The Alpha Factory transforms the feed into a physical environment, making visible the process through which desires, relationships and identities are standardized, reproduced and ultimately transformed into a market.</p></section>
+<section id="en-collezionamento" data-section="collezionamento"><div class="section-kicker">COLLECTION</div>
+<h2>Definition of the research object and scope</h2>
+<p>The object of analysis of the project is the social ecosystem of Pick-Up Artists, also identified as dating coaches or creators linked to the “seduction community”. The research focuses on profiles that produce content mainly aimed at a male audience, promising attraction techniques, relational strategies, personal improvement paths, consultations and courses to achieve success with women.</p>
+<p>The project starts from a critical question: can Pick-Up Artists be considered an intermediate node in a broader systemic problem concerning the objectification of women, transmitted and amplified through social digital platforms? In the project slides, this issue is connected to the standardization of bodies and behaviors, the reduction of identity to optimizable variables, and the construction of relationships as competition and performance.</p>
+<p>The investigation does not assume the existence of objectification a priori, but attempts to verify it empirically through the analysis of language, images, products sold, calls to action and recurring narratives. In this sense, the project does not simply observe individual problematic contents, but tries to reconstruct the system that produces, repeats and monetizes them.</p>
+<p>The scope of the investigation was defined as follows:</p>
+<p>Main platform observed: Instagram<br>Geographical area: Italy<br>Observation period: content published or active in the last 12 months, 2025–2026<br>Unit of analysis: Instagram accounts with at least 500 followers, attributable to coaches, creators, dating coaches or Pick-Up Artists<br>Objects analyzed: public posts, reels, captions, bios, hashtags, external links, websites, courses, consultations, digital products, calls to action, promotional images.</p>
+<p>Private profiles, publicly inaccessible content, direct messages, private conversations, comments from users not relevant to the research, and content not attributable to the dating coach / seduction ecosystem were excluded.</p>
+<h2>First phase: manual mapping of Instagram accounts</h2>
+<p>The first phase of the work consisted of manually searching for and selecting Instagram profiles. The accounts were identified through recurring keywords within the analyzed ecosystem, including:</p>
+<p>attraction, alpha male, seduction, masculinity, picking up.</p>
+<div class="video-grid video-grid-four">
+  <img aria-label="Instagram mapping 1" src="Instagram%201.gif" alt="Instagram mapping 1">
+  <img aria-label="Instagram mapping 2" src="Instagram%202.gif" alt="Instagram mapping 2">
+  <img aria-label="Instagram mapping 3" src="Instagram%203.gif" alt="Instagram mapping 3">
+  <img aria-label="Instagram mapping 4" src="Instagram%204.gif" alt="Instagram mapping 4">
+</div>
+<p>Through these keywords, 30 Instagram accounts were collected and then organized in a spreadsheet. For each profile, the following were recorded: profile name, number of followers, following, number of posts, presence of a website or external link, recurring hashtags, courses, keywords and bio.</p>
+<p>This phase made it possible to observe an initial recurring structure. The bios do not appear as simple personal descriptions, but as small conversion devices. They are built to address a precise target, mainly men, and promise a transformation: becoming more confident, more desirable, more masculine, more respected or more effective in seduction.</p>
+<p>In short, the bios function as micro landing pages. They capture attention, create a need and immediately push toward an action: clicking a link, booking a call, accessing a course or entering a community.</p>
+<p>Materials to be included in the documentation</p>
+<h2>Second phase: collecting Instagram posts with Apify</h2>
+<p>After mapping the profiles, 10 Instagram posts were analyzed for each of the 30 accounts through the Apify platform, resulting in a total of 300 collected posts. For each post, data such as captions, hashtags, likes, comments, engagement, content type and most frequently used words were extracted.</p>
+<div class="video-grid video-grid-single">
+  <video aria-label="Post scraping with associated ID" controls muted autoplay playsinline preload="metadata" src="post%20scraping%20id%20associato.mov"></video>
+</div>
+<p>This phase aimed to systematize the recurring language in static content and public posts. Initially, we tried to categorize the language by assigning content to interpretive categories such as performance, value, dominance, competition, control, attraction and success.</p>
+<p>However, this first methodology revealed an important limitation. A large amount of content ended up in the “Other” category. At first, this category seemed to simply collect what did not fit into the main labels, but its growing relevance made us understand that the problem was not the dataset: it was the method.</p>
+<p>The “Other” category revealed that the language of Pick-Up Artists could not be compressed into predefined categories. Many sentences were ambiguous, hybrid, contradictory or problematic not because of a single word, but because of the tone, the context and the way they constructed a certain idea of masculinity and relationships. Continuing to categorize rigidly would have meant excluding precisely the nuances that made the material more interesting and critical.</p>
+<p>For this reason, we chose to abandon a classification that was too closed and move to a less excluding methodology: word counting. Instead of deciding in advance which categories to look for, we observed which words emerged most frequently from the collected content.</p>
+<p>The counting made it possible to identify recurring words and concepts such as value, respect, control, attraction, success, status, discipline, performance and competition. These terms confirmed the presence of a repetitive language oriented toward the construction of the relationship as strategy and performance.</p>
+<img class="document-image" src="PIVOT%20SU%20Riga%20tipo_contenuto.png" alt="Pivot table on Instagram post content types">
+<p>Materials to be included in the documentation</p>
+<h2>Third phase: analysis of websites, courses and consultations</h2>
+<p>In parallel with the analysis of Instagram content, the external links present in the profiles were observed. Each profile, where available, links to websites, landing pages, courses, consultations, communities, introductory calls or digital products.</p>
+<p>The websites were analyzed manually and organized in tables. For each website, the following were collected:</p>
+<p>URL, website description, call to action, course title, subtitle, description, cover image, product type, price transparency, price, presence of an introductory call and promotional images.</p>
+<p>This phase made it possible to understand how much the Pick-Up Artist ecosystem is structured as a market. Social content is not isolated, but functions as the entry point into a commercial system. The reel or post captures attention, the bio promises transformation, the link leads to a landing page and the landing page leads to a product: a course, consultation, manual, video course, community or introductory call.</p>
+<p>The website analysis made it clear that these creators monetize not only the internalized misogyny of some men, but also their insecurity, loneliness, fear of rejection and low self-esteem. The relational problem is transformed into an individual need, and the individual need is converted into a sellable product.</p>
+<h2>Visual comparison: how women and men are represented</h2>
+<p>During the analysis of websites, covers, landing pages and reels, not only texts, prices and calls to action were collected, but also images. This collection made it possible to observe a second level of the phenomenon: not only what is said, but how women and men are visually represented.</p>
+<p>The comparison between the collected images shows a strong asymmetry.</p>
+<p>Women are often represented in a stereotyped, sexualized way, or reduced to desirable figures. They appear as prizes, temptations, problems, bodies to be conquered, decorative presences or confirmations of male success. They are rarely represented as autonomous subjects: more often they are the target of a strategy, the object of a transformation or the external proof of a man’s value.</p>
+<p>Men, on the other hand, are represented through aspirational and heroic visual codes. In the websites and promotional content, recurring images present the man as a strong, disciplined, dominant, solitary, superior and performing figure. In some cases, the representation almost takes on the tone of a superhero: the man is the one who must get back up, evolve, control himself, win, become rare, transform into an enhanced version of himself.</p>
+<div class="video-grid">
+  <img aria-label="Visual representation of women" src="donna.gif" alt="Visual representation of women">
+  <img aria-label="Visual representation of men" src="uomo.gif" alt="Visual representation of men">
+</div>
+<p>This comparison makes one of the core points of the project clear:</p>
+<p>the woman is represented as a measure; the man is represented as a project.</p>
+<p>The woman measures the man’s success, confirms or denies his value, becomes a test, prize or obstacle. The man, instead, is constructed as a subject to be optimized, improved, trained and made competitive. The visual imagery therefore confirms what emerges from the language: the relationship is transformed into performance, while the female body and desire become indicators of male value.</p>
+<div class="video-grid">
+  <img aria-label="Enriched likes, comments and URLs" src="like_comments_url_enriched.gif" alt="Enriched likes, comments and URLs">
+  <img aria-label="Engagement, like e commenti in rapporto ai follower" src="ENGAGEMENT(like + commenti)_follower.gif" alt="Engagement, like e commenti in rapporto ai follower" ></img>
+</div>
+<p>Materials to be included in the documentation</p>
+<h2>Fourth phase: reel analysis, transcription and the limits of counting</h2>
+<p>The next phase focused on reels. From the 30 analyzed profiles, up to 10 reels per profile were selected, where available, choosing among the most recent and most viewed. For each reel, URLs, views, likes, comments, captions and hashtags were collected. The audio was also transcribed, relevant frames were extracted and, initially, a count of the most repeated words was carried out.</p>
+<div class="video-grid video-grid-single">
+  <img aria-label="Reel scraping" src="scraping%20reel.gif" alt="Reel scraping">
+</div>
+<p>However, precisely during the reel phase, we realized that counting was also partial and excluding. While in posts word counting made it possible to observe general linguistic recurrences, in reels the gravity of the content did not emerge only from word frequency, but from the overall construction of the sentences.</p>
+<p>Some statements were problematic not because they contained a recurring keyword, but because they constructed a specific imaginary: women as emotional, manipulative, predictable, hyper-selective or naturally predisposed to certain behaviors; men as rational, strategic, dominant subjects called to act, control and perform.</p>
+<p>Sentences such as:</p>
+<p>“Attractive women, the so-called hot girls, are not bitches; they simply have very high expectations.”</p>
+<p>“The man is a hunter-gatherer. You locate, intersect, attack, solve. Women have to raise the offspring, so they are much more emotional.”</p>
+<p>“There are levels of deep manipulation in which a woman does not manipulate you on purpose, but is manipulated by her own nature into manipulating.”</p>
+<p>show that the problem cannot be reduced to a single word. Counting could not return the violence of the tone, the naturalization of stereotypes or the way these sentences act on the audience.</p>
+<p>For this reason, in the final phase of the analysis, we chose to adopt the mashup technique. The mashup makes it possible not to isolate words, but to place sentences, slogans, audio fragments and portions of reels from different profiles side by side. In this way, repetition becomes perceptible not as a numerical datum, but as an experience.</p>
+<p>The mashup makes the systemic nature of the analyzed language emerge. It is no longer about the individual creator or the individual sentence, but about a chorus of voices that, although coming from different profiles, repeat the same concepts: value, control, respect, attraction, success, discipline, dominance, reconquest.</p>
+<p>This methodological choice also became a choice of restitution. The final installation does not only show the collected data: it stages their repetition, their aggressiveness and their capacity to build a mental and cultural environment.</p>
+<p>Materials to be included in the documentation</p>
+<h2>Fifth phase: construction of the macro-themes</h2>
+<p>After the reel analysis and the choice of the mashup, the selected fragments were organized into six macro-themes. These categories were not imposed in the first phase of the research, but emerged progressively through listening, transcription and the juxtaposition of the materials.</p>
+<p>The six final macro-themes are:</p>
+<p>Manipulation / Reconquest<br>Success / Performance<br>Respect / Alpha Male<br>Approach / Courage<br>Attraction<br>Collapse / Support</p>
+<p>Each macro-theme represents a different promise of the system.</p>
+<p>Manipulation / Reconquest gathers content related to emotional control, strategic silence, distance and reconquest.</p>
+<p>Success / Performance gathers content in which male value is linked to discipline, status, mental capital, productivity and personal transformation.</p>
+<p>Respect / Alpha Male gathers sentences in which the relationship is described as hierarchy, test or imposition of value.</p>
+<p>Approach / Courage gathers content in which rejection is transformed into training and the man is pushed to act, risk and approach.</p>
+<p>Attraction gathers sentences that represent desire as competition, hierarchy and selection.</p>
+<p>Collapse / Support gathers content that transforms pain, loneliness, failure and fragility into a rhetoric of strength and self-improvement.</p>
+<div class="video-grid video-grid-single">
+  <video aria-label="Final macro-themes" controls muted autoplay playsinline preload="metadata" src="temi.mov"></video>
+</div>
+<p>These macro-themes become the structure of the final installation: each phone represents a voice, a category, a narrative.</p></section>
+<section id="en-restituzione" data-section="restituzione"><div class="section-kicker">RESTITUTION</div>
+<h2>Installation concept</h2>
+<p>The final restitution of The Alpha Factory is not a simple graphic visualization of the dataset, but a spatial, sonic and material translation of the research process.</p>
+<p>The installation stages the manosphere as a closed, repetitive and self-referential ecosystem. The analyzed Pick-Up Artists are not presented as isolated figures, but as subjects acting within a broader network, where different contents end up reproducing the same stereotypes, the same techniques of control and the same models of desirability.</p>
+<p>In the project slides, the manosphere is described as a set of communities and movements united by the belief that society discriminates against men. This context produces a deeply misogynistic attitude, amplified by almost sect-like and self-referential dynamics, in which the relationship is transformed into performance and the woman into an object of evaluation.</p>
+<p>For this reason, the final arrangement of the phones is circular. The circle recalls a closed meeting, a ritual, a sect, a group that reinforces itself through the repetition of the same formulas. The phones are not simply video supports: they are voices that surround the audience. Entering the installation means physically entering a discursive system.</p>
+<h2>Spatial structure of the installation</h2>
+<img class="document-image" src="PIANTINA.png" alt="Floor plan of the installation spatial structure">
+<img class="document-image" src="inst2.jpg" alt="Inst1" loading="lazy">
+<p>The installation is composed of six phones arranged in a circle. Each phone plays a vertical video in loop, built through the mashup technique. The videos combine sentences, slogans, audio fragments, subtitles, recurring words and visual materials inspired by the analyzed reels.</p>
+<p>Each phone corresponds to a macro-theme:</p>
+<div class="phone-grid">
+  <div class="phone-item">
+    <p>Phone 1 — Manipulation / Reconquest<br>Sentences linked to emotional control, distance, strategic silence and reconquest.</p>
+    <div class="phone-video"><video aria-label="Phone 1 - Manipulation / Reconquest" controls muted autoplay loop playsinline preload="metadata" src="manipolazione.hevc.mp4"></video></div>
+  </div>
+  <div class="phone-item">
+    <p>Phone 2 — Success / Performance<br>Sentences linked to discipline, status, personal value and the construction of the winning man.</p>
+    <div class="phone-video"><video aria-label="Phone 2 - Success / Performance" controls muted autoplay loop playsinline preload="metadata" src="successo.hevc.mp4"></video></div>
+  </div>
+  <div class="phone-item">
+    <p>Phone 3 — Respect / Alpha Male<br>Sentences linked to dominance, imposed respect, control and hierarchy.</p>
+    <div class="phone-video"><video aria-label="Phone 3 - Respect / Alpha Male" controls muted autoplay loop playsinline preload="metadata" src="alpha.hevc.mp4"></video></div>
+  </div>
+  <div class="phone-item">
+    <p>Phone 4 — Approach / Courage<br>Sentences linked to action, risk, rejection and the need to perform confidence.</p>
+    <div class="phone-video"><video aria-label="Phone 4 - Approach / Courage" controls muted autoplay loop playsinline preload="metadata" src="Approccio.hevc.mp4"></video></div>
+  </div>
+  <div class="phone-item">
+    <p>Phone 5 — Attraction<br>Sentences linked to selection, competition, desirability and the hierarchy of value.</p>
+    <div class="phone-video"><video aria-label="Phone 5 - Attraction" controls muted autoplay loop playsinline preload="metadata" src="Attrazione.hevc.mp4"></video></div>
+  </div>
+  <div class="phone-item">
+    <p>Phone 6 — Collapse / Support<br>Sentences linked to suffering, loneliness, fragility and the transformation of pain into strength.</p>
+    <div class="phone-video"><video aria-label="Phone 6 - Collapse / Support" controls muted autoplay loop playsinline preload="metadata" src="crollo.hevc.mp4"></video></div>
+  </div>
+</div>
+<p>The six phones function as six channels of the same machine. Each device seems to speak about a different theme, but together they build the same message: the man must improve himself, control himself and dominate; the woman must be read, conquered, measured or overcome.</p>
+<h2>The center of the installation: books, receipts, prices and QR codes</h2>
+<p>At the center of the circle is the material core of the exhibition. Here, the books found during the website analysis are placed together with receipts, prices, descriptions, calls to action and QR codes.</p>
+<p>This central part makes the commercial aspect of the ecosystem visible. What appears in reels as advice, support or personal motivation reveals itself as part of a structured market. Relational distress is transformed into a product. Fear of rejection becomes a course. Suffering becomes consultation. The relationship becomes a funnel.</p>
+<p>The books collected from the websites become physical objects within the installation. Their titles make visible the radicality of the language used by these ecosystems. Some examples:</p>
+<p>“How to make her regret replacing you”<br>“Free yourself from her: how to break emotional dependency and reclaim yourself”<br>“The 16 laws to get inside a woman’s head”</p>
+<div class="video-grid video-grid-single">
+  <img aria-label="Books collected from the analyzed websites" src="libri.gif" alt="Books collected from the analyzed websites">
+</div>
+<p>Receipts are placed next to the books. The receipts function as symbolic proof of the seduction market. They report prices, descriptions, commercial promises and calls to action for the courses and consultations sold. Each receipt can include a QR code linking to the analyzed website or source.</p>
+<img class="document-print" src="stampante.gif" alt="Receipt printer animation" loading="lazy">
+<div class="receipt-grid">
+  <img src="assets/scontrini/scan-scontrini-1.png" alt="Scontrino scansionato 1" loading="lazy">
+  <img src="assets/scontrini/scan-scontrini-3.png" alt="Scontrino scansionato 3" loading="lazy">
+  <img src="assets/scontrini/scan-scontrini-4.png" alt="Scontrino scansionato 4" loading="lazy">
+</div>
+<p>The center of the exhibition is illuminated. The light invites the audience to enter the circle and approach the objects. This choice creates an ambiguity: the light attracts, but once inside, the user is surrounded by the phones and the voices of the mashup. The space thus reproduces the functioning of the funnel observed online: the content captures, the promise seduces, the product monetizes.</p>
+<div class="image-grid">
+  <img src="centro1.JPG" alt="Exhibition center 1" loading="lazy">
+  <img src="centro2.JPG" alt="Exhibition center 2" loading="lazy">
+</div>
+<h2>Creative choices and meaning</h2>
+<p>The choice of the smartphone as the main device comes from the original context of the research. The analyzed contents are born and circulate mainly on vertical screens, inside fast, repetitive and personalized feeds. Using real phones means preserving the everyday format of the phenomenon, but moving it into a physical space, where repetition becomes more evident and more disturbing.</p>
+<p>The circular arrangement transforms the phones into a chorus. Each voice repeats one part of the ideology, but the overall effect is that of a closed, almost sect-like system. The audience does not watch a single piece of content, but is immersed in a network of messages that confirm one another.</p>
+<p>The mashup is a fundamental choice because it returns what counting could not show: tone, insistence, implicit violence, and continuity across different profiles. It is no longer a matter of reading a frequent word, but of listening to a linguistic machine that continuously produces the same idea of man and woman.</p>
+<p>The center with books and receipts adds another layer: it shows that this discursive machine is also an economic machine. Misogyny, fear, insecurity and the desire for control become sellable products.</p>
+<h2>Installation Montage</h2>
+<div class="image-grid">
+  <img src="montaggio1.JPG" alt="Montage 1" loading="lazy">
+  <img src="montaggio2.JPG" alt="Montage 2" loading="lazy">
+  <img src="montaggio3.JPG" alt="Montage 3" loading="lazy">
+  <img src="montaggio4.JPG" alt="Montage 4" loading="lazy">
+</div>
+<p>The installation therefore works on three levels:</p>
+<p>Language — the phones return sentences, slogans and reel mashups.<br>Imagery — the collected images show the woman as a stereotype and the man as a heroic figure.<br>Market — books, receipts, prices, calls to action and QR codes show the monetization of seduction.</p>
+<p>The Alpha Factory does not simply visualize a dataset: it stages a discursive and commercial machine in which men are produced as projects of optimization, women are measured as confirmations of their value, and relationships become a market.</p></section>
+<div class="video-grid video-grid-single">
+  <video aria-label="finale" controls muted autoplay playsinline preload="metadata" src="dv-video_2_.webm"></video>
+</div>
+<section id="en-credits" data-section="credits"><div class="section-kicker">CREDITS</div>
+<p>Student-authors<br>Martina Procopio<br>Giorgia Ciocca<br>Anisia Petruccelli</p>
+<p>Lecturers<br>Antonella Autori<br>Enrico Isidori</p>
+<p>Course<br>Data Visualization<br>DASL Communication and Creative Technologies<br>IED Torino</p>
+<p>A.Y. 2025/2026</p>
+</section>
+  </div>
+</main>
+<script>
+const buttons = document.querySelectorAll('.lang-switch button');
+const contents = document.querySelectorAll('[data-lang-content]');
+const navLinks = document.querySelectorAll('.side-nav a');
+const scrollVideos = document.querySelectorAll('.video-grid video');
+const navLabels = {
+  it: {
+    abstract: 'ABSTRACT', collezionamento: 'COLLEZIONAMENTO', fase1: 'Ricerca e selezione dei profili', fase2: 'Raccolta dei post e counting', fase3: 'Siti, corsi e monetizzazione', fase4: 'Analisi dei reel e mashup', fase5: 'Costruzione delle tematiche', restituzione: 'RESTITUZIONE', credits: 'CREDITS'
+  },
+  en: {
+    abstract: 'ABSTRACT', collezionamento: 'COLLECTION', fase1: 'Profile research and selection', fase2: 'Post collection and counting', fase3: 'Websites, courses and monetization', fase4: 'Reel analysis and mashup', fase5: 'Construction of themes', restituzione: 'RESTITUTION', credits: 'CREDITS'
+  }
+};
+const phaseMap = {
+  it: { fase1: 'Prima fase', fase2: 'Seconda fase', fase3: 'Terza fase', fase4: 'Quarta fase', fase5: 'Quinta fase' },
+  en: { fase1: 'First phase', fase2: 'Second phase', fase3: 'Third phase', fase4: 'Fourth phase', fase5: 'Fifth phase' }
+};
+function currentLang() { return document.documentElement.lang || 'it'; }
+function updateNavLabels(lang) {
+  navLinks.forEach(link => {
+    const key = link.dataset.target;
+    if (navLabels[lang] && navLabels[lang][key]) link.textContent = navLabels[lang][key];
+  });
+}
+function setActiveNav(id) {
+  navLinks.forEach(link => link.classList.toggle('active', link.dataset.target === id));
+}
+function findPhaseHeading(lang, id) {
+  const label = phaseMap[lang] && phaseMap[lang][id];
+  if (!label) return null;
+  return [...document.querySelectorAll('.lang-content.active h2')]
+    .find(h => h.textContent.toLowerCase().includes(label.toLowerCase()));
+}
+function elementTop(el) {
+  return el.getBoundingClientRect().top + window.scrollY;
+}
+function getNavTargets() {
+  const lang = currentLang();
+  const activeContent = document.querySelector('.lang-content.active');
+  if (!activeContent) return [];
+
+  const targets = [...activeContent.querySelectorAll('section')]
+    .filter(section => section.dataset.section)
+    .map(section => ({ id: section.dataset.section, el: section }));
+
+  Object.keys(phaseMap[lang] || {}).forEach(id => {
+    const el = findPhaseHeading(lang, id);
+    if (el) targets.push({ id, el });
+  });
+
+  return targets.sort((a, b) => elementTop(a.el) - elementTop(b.el));
+}
+function updateActiveNav() {
+  const targets = getNavTargets();
+  if (!targets.length) return;
+
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  if (window.scrollY >= maxScroll - 4) {
+    setActiveNav(targets[targets.length - 1].id);
+    return;
+  }
+
+  const marker = window.scrollY + Math.min(window.innerHeight * 0.28, 180);
+  const active = targets.reduce((current, target) => (
+    elementTop(target.el) <= marker ? target : current
+  ), targets[0]);
+
+  setActiveNav(active.id);
+}
+function switchLang(lang) {
+  document.documentElement.lang = lang;
+  buttons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  contents.forEach(c => c.classList.toggle('active', c.dataset.langContent === lang));
+  updateNavLabels(lang);
+  updateActiveNav();
+  updateScrollVideos();
+}
+function scrollToSection(id, update=true) {
+  const lang = currentLang();
+  const prefix = lang === 'en' ? 'en-' : '';
+  let el;
+  if (phaseMap[lang][id]) {
+    el = findPhaseHeading(lang, id);
+  } else {
+    const targetId = phaseMap[lang][id] ? 'collezionamento' : id;
+    el = document.getElementById(prefix + targetId) || document.getElementById(targetId);
+  }
+  if (el) {
+    setActiveNav(id);
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (update) history.replaceState(null, '', '#' + id);
+  }
+}
+function videoIsInActiveLanguage(video) {
+  const langContent = video.closest('.lang-content');
+  return !langContent || langContent.classList.contains('active');
+}
+function setScrollVideoPlayback(video, shouldPlay) {
+  if (!videoIsInActiveLanguage(video)) {
+    video.pause();
+    return;
+  }
+  if (shouldPlay) {
+    video.muted = true;
+    video.play().catch(() => {});
+  } else {
+    video.pause();
+  }
+}
+function updateScrollVideos() {
+  scrollVideos.forEach(video => {
+    const rect = video.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight * 0.85 && rect.bottom > window.innerHeight * 0.15;
+    setScrollVideoPlayback(video, isVisible);
+  });
+}
+if ('IntersectionObserver' in window) {
+  const videoObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      setScrollVideoPlayback(entry.target, entry.isIntersecting && entry.intersectionRatio >= 0.2);
+    });
+  }, { threshold: [0, 0.2, 0.6] });
+  scrollVideos.forEach(video => videoObserver.observe(video));
+} else {
+  window.addEventListener('scroll', updateScrollVideos, { passive: true });
+}
+buttons.forEach(btn => btn.addEventListener('click', () => switchLang(btn.dataset.lang)));
+navLinks.forEach(link => link.addEventListener('click', (e) => {
+  e.preventDefault();
+  scrollToSection(link.dataset.target);
+}));
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+window.addEventListener('resize', updateActiveNav);
+window.addEventListener('resize', updateScrollVideos);
+updateNavLabels('it');
+updateActiveNav();
+updateScrollVideos();
+
+
+window.addEventListener('pageshow', () => {
+  document.body.classList.remove('is-leaving');
+  requestAnimationFrame(() => document.body.classList.add('is-loaded'));
+});
+
+document.querySelectorAll('a[href]').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target === '_blank') return;
+    event.preventDefault();
+    document.body.classList.add('is-leaving');
+    window.setTimeout(() => {
+      window.location.href = href;
+    }, 420);
+  });
+});
+
+</script>
+</body>
+</html>
