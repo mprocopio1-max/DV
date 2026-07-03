@@ -519,6 +519,12 @@ function muteVideos(content) {
     video.muted = true;
   });
 }
+function playActiveVideos() {
+  document.querySelectorAll('.lang-content.active video').forEach(video => {
+    video.muted = true;
+    video.play().catch(() => {});
+  });
+}
 function switchLang(lang) {
   const activeContent = document.querySelector('.lang-content.active');
   if (activeContent && activeContent.dataset.langContent !== lang) muteVideos(activeContent);
@@ -527,6 +533,7 @@ function switchLang(lang) {
   contents.forEach(c => c.classList.toggle('active', c.dataset.langContent === lang));
   updateNavLabels(lang);
   updateActiveNav();
+  playActiveVideos();
 }
 function scrollToSection(id, update=true) {
   const lang = currentLang();
@@ -552,11 +559,12 @@ window.addEventListener('scroll', updateActiveNav, { passive: true });
 window.addEventListener('resize', updateActiveNav);
 updateNavLabels('it');
 updateActiveNav();
-
+playActiveVideos();
 
 window.addEventListener('pageshow', () => {
   document.body.classList.remove('is-leaving');
   requestAnimationFrame(() => document.body.classList.add('is-loaded'));
+  playActiveVideos();
 });
 
 document.querySelectorAll('a[href]').forEach((link) => {

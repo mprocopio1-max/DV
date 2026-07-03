@@ -468,7 +468,7 @@ body.is-leaving { opacity: 0; }
 <h2>Raccolta dei post Instagram con Apify</h2>
 <p>Dopo la mappatura dei profili, per ciascuno dei 30 account sono stati analizzati 10 post Instagram attraverso la piattaforma Apify, ottenendo un totale di 300 post raccolti. Per ogni post sono stati estratti dati come caption, hashtag, like, commenti, engagement, tipo di contenuto e parole più utilizzate.</p>
 <div class="video-grid video-grid-single">
-  <video aria-label="Post scraping con ID associato" controls muted autoplay playsinline preload="metadata" src="post%20scraping%20id%20associato.mov"></video>
+  <video aria-label="Post scraping con ID associato" controls muted autoplay playsinline preload="metadata" src="post-scraping-id-associato.mp4"></video>
 </div>
 <p>Questa fase aveva l’obiettivo di sistematizzare il linguaggio ricorrente nei contenuti statici e nei post pubblici. Inizialmente, abbiamo cercato di categorizzare il linguaggio assegnando i contenuti a categorie interpretative come performance, valore, dominio, competizione, controllo, attrazione e successo.</p>
 <p>Tuttavia, questa prima metodologia ha mostrato un limite importante. Una grande quantità di contenuti finiva nella categoria “Altro”. All’inizio questa categoria sembrava semplicemente raccogliere ciò che non rientrava nelle etichette principali, ma la sua rilevanza crescente ci ha fatto capire che il problema non era il dataset: era il metodo.</p>
@@ -645,7 +645,7 @@ body.is-leaving { opacity: 0; }
 <h2>Second phase: collecting Instagram posts with Apify</h2>
 <p>After mapping the profiles, 10 Instagram posts were analyzed for each of the 30 accounts through the Apify platform, resulting in a total of 300 collected posts. For each post, data such as captions, hashtags, likes, comments, engagement, content type and most frequently used words were extracted.</p>
 <div class="video-grid video-grid-single">
-  <video aria-label="Post scraping with associated ID" controls muted autoplay playsinline preload="metadata" src="post%20scraping%20id%20associato.mov"></video>
+  <video aria-label="Post scraping with associated ID" controls muted autoplay playsinline preload="metadata" src="post-scraping-id-associato.mp4"></video>
 </div>
 <p>This phase aimed to systematize the recurring language in static content and public posts. Initially, we tried to categorize the language by assigning content to interpretive categories such as performance, value, dominance, competition, control, attraction and success.</p>
 <p>However, this first methodology revealed an important limitation. A large amount of content ended up in the “Other” category. At first, this category seemed to simply collect what did not fit into the main labels, but its growing relevance made us understand that the problem was not the dataset: it was the method.</p>
@@ -796,7 +796,7 @@ body.is-leaving { opacity: 0; }
 const buttons = document.querySelectorAll('.lang-switch button');
 const contents = document.querySelectorAll('[data-lang-content]');
 const navLinks = document.querySelectorAll('.side-nav a');
-const scrollVideos = document.querySelectorAll('.video-grid video');
+const scrollVideos = document.querySelectorAll('main video');
 const navLabels = {
   it: {
     abstract: 'ABSTRACT', collezionamento: 'COLLEZIONAMENTO', fase1: 'Ricerca e selezione dei profili', fase2: 'Raccolta dei post e counting', fase3: 'Siti, corsi e monetizzazione', fase4: 'Analisi dei reel e mashup', fase5: 'Costruzione delle tematiche', restituzione: 'RESTITUZIONE', credits: 'CREDITS'
@@ -934,6 +934,7 @@ updateScrollVideos();
 window.addEventListener('pageshow', () => {
   document.body.classList.remove('is-leaving');
   requestAnimationFrame(() => document.body.classList.add('is-loaded'));
+  updateScrollVideos();
 });
 
 document.querySelectorAll('a[href]').forEach((link) => {
